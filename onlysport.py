@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
+import sports
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -71,8 +72,6 @@ def create_sport():
     description = request.form["description"]
     user_id = session["user_id"]
 
-    sql = """INSERT INTO sports (sport, duration, distance, description, user_id) 
-            VALUES (?, ?, ?, ?, ?)"""
-    db.execute(sql, [sport, duration, distance, description, user_id])
+    sports.add_sport(sport, duration, distance, description, user_id)
 
     return redirect("/")
