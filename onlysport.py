@@ -11,7 +11,14 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    user_sports = sports.get_sports(session["user_id"])
+    all_sports = sports.get_allsports()
+    return render_template("index.html", user_sports = user_sports, sports = all_sports)
+
+@app.route("/sport/<int:sport_id>")
+def show_sport(sport_id):
+    sport = sports.get_sport(sport_id)
+    return render_template("show_sport.html", sport=sport)
 
 @app.route("/register")
 def register():

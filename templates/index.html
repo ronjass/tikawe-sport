@@ -24,6 +24,21 @@
   </p>
 
   <h2>Omat urheilusuoritukset</h2>
+  <ul>
+    {% for sport in user_sports %}
+    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
+    {% endfor %}
+  </ul>
+</body>
+
+</html>
+
+<h2>Kaikki urheilusuoritukset</h2>
+  <ul>
+    {% for sport in sports %}
+    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
+    {% endfor %}
+  </ul>
 </body>
 
 </html>
