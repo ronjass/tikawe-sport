@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -98,11 +98,18 @@ def create_sport():
 @app.route("/edit_sport/<int:sport_id>")
 def edit_sport(sport_id):
     sport = sports.get_sport(sport_id)
+    if sport["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_sport.html", sport=sport)
 
 @app.route("/update_sport", methods=["POST"])
 def update_sport():
     sport_id = request.form["sport_id"]
+    user_sport = sports.get_sport(sport_id)
+
+    if user_sport["user_id"] != session["user_id"]:
+        abort(403)
+
     sport = request.form["sport"]
     duration = request.form["duration"]
     distance = request.form["distance"]
@@ -114,8 +121,12 @@ def update_sport():
 
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):
+    sport = sports.get_sport(sport_id)
+
+    if sport["user_id"] != session["user_id"]:
+        abort(403)
+        
     if request.method == "GET":
-        sport = sports.get_sport(sport_id)
         return render_template("remove_sport.html", sport=sport)
     if request.method == "POST":
         if "remove" in request.form:
