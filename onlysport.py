@@ -82,3 +82,20 @@ def create_sport():
     sports.add_sport(sport, duration, distance, description, user_id)
 
     return redirect("/")
+
+@app.route("/edit_sport/<int:sport_id>")
+def edit_sport(sport_id):
+    sport = sports.get_sport(sport_id)
+    return render_template("edit_sport.html", sport=sport)
+
+@app.route("/update_sport", methods=["POST"])
+def update_sport():
+    sport_id = request.form["sport_id"]
+    sport = request.form["sport"]
+    duration = request.form["duration"]
+    distance = request.form["distance"]
+    description = request.form["description"]
+
+    sports.update_sport(sport_id, sport, duration, distance, description)
+
+    return redirect("/sport/" + str(sport_id))

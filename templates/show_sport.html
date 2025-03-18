@@ -21,7 +21,10 @@
   </p>
   <p>
     <a href="/">Takaisin etusivulle</a>
+    {% if session.user_id == sport.user_id %}
+    <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
   </p>
+    {% endif %}
 </body>
 
 </html>

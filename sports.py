@@ -16,12 +16,22 @@ def get_allsports():
     return db.query(sql)
 
 def get_sport(sport_id):
-    sql = """SELECT sports.sport,
+    sql = """SELECT sports.id,
+                    sports.sport,
                     sports.duration,
                     sports.distance,
                     sports.description,
+                    users.id user_id,
                     users.username
             FROM sports, users
             WHERE sports.user_id = users.id AND sports.id = ?"""
     
     return db.query(sql, [sport_id])[0]
+
+def update_sport(sport_id, sport, duration, distance, description):
+    sql = """UPDATE sports SET sport = ?,
+                                duration = ?,
+                                distance = ?,
+                                description = ?
+                            WHERE id = ?"""
+    db.execute(sql, [sport, duration, distance, description, sport_id])
