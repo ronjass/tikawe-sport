@@ -23,6 +23,7 @@
     <a href="/">Takaisin etusivulle</a>
     {% if session.user_id == sport.user_id %}
     <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
+    <a href="/remove_sport/{{ sport.id }}">Poista</a>
   </p>
     {% endif %}
 </body>

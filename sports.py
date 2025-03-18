@@ -35,3 +35,7 @@ def update_sport(sport_id, sport, duration, distance, description):
                                 description = ?
                             WHERE id = ?"""
     db.execute(sql, [sport, duration, distance, description, sport_id])
+
+def remove_sport(sport_id):
+    sql = "DELETE FROM sports WHERE id = ?"
+    db.execute(sql, [sport_id])

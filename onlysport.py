@@ -99,3 +99,16 @@ def update_sport():
     sports.update_sport(sport_id, sport, duration, distance, description)
 
     return redirect("/sport/" + str(sport_id))
+
+@app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
+def remove_sport(sport_id):
+    if request.method == "GET":
+        sport = sports.get_sport(sport_id)
+        return render_template("remove_sport.html", sport=sport)
+    if request.method == "POST":
+        if "remove" in request.form:
+            sports.remove_sport(sport_id)
+            return redirect("/")
+    else:
+        return redirect("/sport/" + str(sport_id))
+

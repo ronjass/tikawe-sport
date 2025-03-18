@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Urheilusuorituksen pois0</title>
+</head>
+
+<body>
+  <h1>Urheilusuorituksen poisto</h1>
+  <p>Haluatko varmasti poistaa urheilusuorituksen {{ sport.sport }}?</p>
+  <form action="/remove_sport/{{ sport.id }}" method="post">
+    <input type="submit" name="remove" value="Poista urheilusuoritus">
+    <input type="submit" name="back" value="Palaa takaisin">
+  </form>
+</body>
+
+</html>
