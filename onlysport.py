@@ -11,9 +11,11 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    user_sports = sports.get_sports(session["user_id"])
     all_sports = sports.get_allsports()
-    return render_template("index.html", user_sports = user_sports, sports = all_sports)
+    if session.get("user_id"):
+        user_sports = sports.get_sports(session["user_id"])
+        return render_template("index.html", user_sports = user_sports, sports = all_sports)
+    return render_template("index.html", sports = all_sports)
 
 @app.route("/find_sport")
 def find_sport():
