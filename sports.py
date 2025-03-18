@@ -39,3 +39,11 @@ def update_sport(sport_id, sport, duration, distance, description):
 def remove_sport(sport_id):
     sql = "DELETE FROM sports WHERE id = ?"
     db.execute(sql, [sport_id])
+
+def find_sports(query):
+    sql = """SELECT id, sport
+             FROM sports
+             WHERE sport LIKE ? OR DESCRIPTION LIKE ?
+             ORDER BY id DESC"""
+    like = "%" + query + "%"
+    return db.query(sql, [like, like])

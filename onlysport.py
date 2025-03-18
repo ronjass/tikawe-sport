@@ -15,6 +15,16 @@ def index():
     all_sports = sports.get_allsports()
     return render_template("index.html", user_sports = user_sports, sports = all_sports)
 
+@app.route("/find_sport")
+def find_sport():
+    query = request.args.get("query")
+    if query:
+        results = sports.find_sports(query)
+    else:
+        query = ""
+        results = []
+    return render_template("find_sport.html", query=query, results=results)
+
 @app.route("/sport/<int:sport_id>")
 def show_sport(sport_id):
     sport = sports.get_sport(sport_id)
