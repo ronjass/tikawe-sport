@@ -26,7 +26,8 @@ def get_sport(sport_id):
             FROM sports, users
             WHERE sports.user_id = users.id AND sports.id = ?"""
     
-    return db.query(sql, [sport_id])[0]
+    result = db.query(sql, [sport_id])
+    return result[0] if result else None
 
 def update_sport(sport_id, sport, duration, distance, description):
     sql = """UPDATE sports SET sport = ?,

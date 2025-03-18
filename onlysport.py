@@ -30,6 +30,8 @@ def find_sport():
 @app.route("/sport/<int:sport_id>")
 def show_sport(sport_id):
     sport = sports.get_sport(sport_id)
+    if not sport:
+        abort(404)
     return render_template("show_sport.html", sport=sport)
 
 @app.route("/register")
@@ -98,6 +100,8 @@ def create_sport():
 @app.route("/edit_sport/<int:sport_id>")
 def edit_sport(sport_id):
     sport = sports.get_sport(sport_id)
+    if not sport:
+        abort(404)
     if sport["user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_sport.html", sport=sport)
@@ -106,6 +110,8 @@ def edit_sport(sport_id):
 def update_sport():
     sport_id = request.form["sport_id"]
     user_sport = sports.get_sport(sport_id)
+    if not user_sport:
+        abort(404)
 
     if user_sport["user_id"] != session["user_id"]:
         abort(403)
@@ -122,6 +128,8 @@ def update_sport():
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):
     sport = sports.get_sport(sport_id)
+    if not sport:
+        abort(404)
 
     if sport["user_id"] != session["user_id"]:
         abort(403)
