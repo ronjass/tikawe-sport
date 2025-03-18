@@ -6,7 +6,7 @@ def add_sport(sport, duration, distance, description, user_id):
     db.execute(sql, [sport, duration, distance, description, user_id])
 
 def get_sports(user_id):
-    sql = "SELECT id, sport FROM sports WHERE id = ? ORDER BY id DESC"
+    sql = "SELECT id, sport FROM sports WHERE sports.user_id = ? ORDER BY id DESC"
 
     return db.query(sql, [user_id])
 
