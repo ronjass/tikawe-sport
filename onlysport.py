@@ -122,6 +122,7 @@ def edit_sport(sport_id):
         abort(404)
     if sport["user_id"] != session["user_id"]:
         abort(403)
+
     return render_template("edit_sport.html", sport=sport)
 
 @app.route("/update_sport", methods=["POST"])
@@ -139,6 +140,15 @@ def update_sport():
     duration = request.form["duration"]
     distance = request.form["distance"]
     description = request.form["description"]
+
+    if len(sport) > 50 or len(description) > 1000:
+        abort(403)
+    if not re.search("^[1-9][0-9]{0,2}$", duration):
+        abort(403)
+    if not re.search("^[1-9][0-9]{0,2}$", distance):
+        abort(403)
+    if not sport or not duration or not distance or not description:
+        abort(403)
 
     sports.update_sport(sport_id, sport, duration, distance, description)
 
