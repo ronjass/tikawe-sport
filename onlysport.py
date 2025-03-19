@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 import sports
+import re
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -94,10 +95,19 @@ def new_sport():
 
 @app.route("/create_sport", methods=["POST"])
 def create_sport():
+    require_login()
     sport = request.form["sport"]
     duration = request.form["duration"]
     distance = request.form["distance"]
     description = request.form["description"]
+    if len(sport) > 50 or len(description) > 1000:
+        abort(403)
+    if not re.search("^[1-9][0-9]{0,2}$", duration):
+        abort(403)
+    if not re.search("^[1-9][0-9]{0,2}$", distance):
+        abort(403)
+    if not sport or not duration or not distance or not description:
+        abort(403)
     user_id = session["user_id"]
 
     sports.add_sport(sport, duration, distance, description, user_id)
