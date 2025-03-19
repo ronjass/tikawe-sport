@@ -9,6 +9,10 @@ import sports
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_sports = sports.get_allsports()
@@ -40,6 +44,7 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
+    require_login()
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
@@ -77,12 +82,14 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
 
 @app.route("/new_sport")
 def new_sport():
+    require_login()
     return render_template("new_sport.html")
 
 @app.route("/create_sport", methods=["POST"])
@@ -99,6 +106,7 @@ def create_sport():
 
 @app.route("/edit_sport/<int:sport_id>")
 def edit_sport(sport_id):
+    require_login()
     sport = sports.get_sport(sport_id)
     if not sport:
         abort(404)
@@ -108,6 +116,7 @@ def edit_sport(sport_id):
 
 @app.route("/update_sport", methods=["POST"])
 def update_sport():
+    require_login()
     sport_id = request.form["sport_id"]
     user_sport = sports.get_sport(sport_id)
     if not user_sport:
@@ -127,6 +136,7 @@ def update_sport():
 
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):
+    require_login()
     sport = sports.get_sport(sport_id)
     if not sport:
         abort(404)
