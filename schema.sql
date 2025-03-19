@@ -7,8 +7,8 @@ CREATE TABLE users (
 CREATE TABLE sports (
     id INTEGER PRIMARY KEY,
     sport TEXT,
-    duration TEXT,
-    distance TEXT,
+    duration INTEGER,
+    distance INTEGER,
     description TEXT,
     user_id INTEGER REFERENCES users
 );
