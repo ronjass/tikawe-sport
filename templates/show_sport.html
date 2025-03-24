@@ -19,6 +19,11 @@
   <p>
     Urheilija: <a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
   </p>
+  {% if classes %}
+  {% for class in classes %}
+  <p>{{ class. title }}: {{ class.value }}</p>
+  {% endfor %}
+  {% endif %}
   <p>
     <a href="/">Takaisin etusivulle</a>
     {% if session.user_id == sport.user_id %}

@@ -45,7 +45,8 @@ def show_sport(sport_id):
     sport = sports.get_sport(sport_id)
     if not sport:
         abort(404)
-    return render_template("show_sport.html", sport=sport)
+    classes = sports.get_classes(sport_id)
+    return render_template("show_sport.html", sport=sport, classes=classes)
 
 @app.route("/register")
 def register():
@@ -111,7 +112,15 @@ def create_sport():
         abort(403)
     user_id = session["user_id"]
 
-    sports.add_sport(sport, duration, distance, description, user_id)
+    classes = []
+    feeling = request.form["feeling"]
+    if feeling:
+        classes.append(("Fiilis", feeling))
+    load = request.form["load"]
+    if load:
+        classes.append(("Kuormittavuus", load))
+
+    sports.add_sport(sport, duration, distance, description, user_id, classes)
 
     return redirect("/")
 

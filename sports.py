@@ -1,9 +1,19 @@
 import db
 
-def add_sport(sport, duration, distance, description, user_id):
+def add_sport(sport, duration, distance, description, user_id, classes):
     sql = """INSERT INTO sports (sport, duration, distance, description, user_id) 
             VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [sport, duration, distance, description, user_id])
+
+    sport_id = db.last_insert_id()
+
+    sql = "INSERT INTO sport_classes (sport_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [sport_id, title, value])
+
+def get_classes(sport_id):
+    sql = "SELECT title, value FROM sport_classes WHERE sport_id = ?"
+    return db.query(sql, [sport_id])
 
 def get_sports(user_id):
     sql = "SELECT id, sport FROM sports WHERE sports.user_id = ? ORDER BY id DESC"
