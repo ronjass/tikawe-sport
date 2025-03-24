@@ -113,11 +113,17 @@ def create_sport():
         abort(403)
     user_id = session["user_id"]
 
+    all_classes = sports.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
 
     sports.add_sport(sport, duration, distance, description, user_id, classes)
 
@@ -166,11 +172,17 @@ def update_sport():
     if not sport or not duration or not distance or not description:
         abort(403)
 
+    all_classes = sports.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            title, value = entry.split(":")
+            if title not in all_classes:
+                abort(403)
+            if value not in all_classes[title]:
+                abort(403)
+            classes.append((title, value))
 
     sports.update_sport(sport_id, sport, duration, distance, description, classes)
 
