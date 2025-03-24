@@ -51,13 +51,20 @@ def get_sport(sport_id):
     result = db.query(sql, [sport_id])
     return result[0] if result else None
 
-def update_sport(sport_id, sport, duration, distance, description):
+def update_sport(sport_id, sport, duration, distance, description, classes):
     sql = """UPDATE sports SET sport = ?,
                                 duration = ?,
                                 distance = ?,
                                 description = ?
                             WHERE id = ?"""
     db.execute(sql, [sport, duration, distance, description, sport_id])
+
+    sql = "DELETE FROM sport_classes WHERE sport_id = ?"
+    db.execute(sql, [sport_id])
+
+    sql = "INSERT INTO sport_classes (sport_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [sport_id, title, value])
 
 def remove_sport(sport_id):
     sql = "DELETE FROM sports WHERE id = ?"

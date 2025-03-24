@@ -132,7 +132,14 @@ def edit_sport(sport_id):
     if sport["user_id"] != session["user_id"]:
         abort(403)
 
-    return render_template("edit_sport.html", sport=sport)
+    all_classes = sports.get_all_classes()
+    classes = {}
+    for this_class in all_classes:
+        classes[this_class] = ""
+    for entry in sports.get_classes(sport_id):
+        classes[entry["title"]] = entry["value"]
+
+    return render_template("edit_sport.html", sport=sport, classes=classes, all_classes=all_classes)
 
 @app.route("/update_sport", methods=["POST"])
 def update_sport():
@@ -159,7 +166,13 @@ def update_sport():
     if not sport or not duration or not distance or not description:
         abort(403)
 
-    sports.update_sport(sport_id, sport, duration, distance, description)
+    classes = []
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+
+    sports.update_sport(sport_id, sport, duration, distance, description, classes)
 
     return redirect("/sport/" + str(sport_id))
 
