@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Käyttäjä {{ user.username }}</title>
+</head>
+
+<body>
+  <h1>Käyttäjä {{ user.username }}</h1>
+  <p>
+    Käyttäjä on lisännyt {{ user_sports | count }} urheilusuoritusta
+  </p>
+  <h2>Urheilusuoritukset</h2>
+  <ul>
+    {% for sport in user_sports %}
+    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
+    {% endfor %}
+  </ul>
+  <p>
+    <a href="/">Takaisin etusivulle</a>
+  </p>
+</body>
+
+</html>

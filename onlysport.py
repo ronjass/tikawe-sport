@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 import sports
+import users
 import re
 
 app = Flask(__name__)
@@ -21,6 +22,14 @@ def index():
         user_sports = sports.get_sports(session["user_id"])
         return render_template("index.html", user_sports = user_sports, sports = all_sports)
     return render_template("index.html", sports = all_sports)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    user_sports = users.get_sports(user_id)
+    return render_template("show_user.html", user=user, user_sports = user_sports)
 
 @app.route("/find_sport")
 def find_sport():
