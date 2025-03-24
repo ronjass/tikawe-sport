@@ -24,26 +24,16 @@
       Kuvaus: <br />
       <textarea name="description" rows="8" cols="60" maxlength="1000" required></textarea>
     </p>
+    {% for class in classes %}
     <p>
-        Fiilis: <br />
-        <select name="feeling">
-        <option value="">(valitse)</option>
-        <option value="Mahtava">Mahtava</option>
-        <option value="Hyvä">Hyvä</option>
-        <option value="Ihan ok">Ihan ok</option>
-        <option value="Surkea">Surkea</option>
-    </select>
-    </p>
-    <p>
-        Harjoituksen kuormittavuus: <br />
-        <select name="load">
-        <option value="">(valitse)</option>
-        <option value="Erittäin kuormittava">Erittäin kuormittava</option>
-        <option value="Kuormittava">Kuormittava</option>
-        <option value="Keskitaso">Keskitaso</option>
-        <option value="Kevyt">Kevyt</option>
-        <option value="Erittäin kevyt">Erittäin kevyt</option>
-    </select>
+        {{ class }}: <br />
+        <select name="classes">
+            <option value="">(valitse)</option>
+        {% for option in classes[class] %}
+            <option value="{{ class }}:{{ option }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+        {% endfor %}
     </p>
     <input type="submit" value="Luo urheilusuoritus" />
   </form>

@@ -13,6 +13,12 @@ CREATE TABLE sports (
     user_id INTEGER REFERENCES users
 );
 
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+)
+
 CREATE TABLE sport_classes (
     id INTEGER PRIMARY KEY,
     sport_id INTEGER REFERENCES sports,

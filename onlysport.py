@@ -93,7 +93,8 @@ def logout():
 @app.route("/new_sport")
 def new_sport():
     require_login()
-    return render_template("new_sport.html")
+    classes = sports.get_all_classes()
+    return render_template("new_sport.html", classes=classes)
 
 @app.route("/create_sport", methods=["POST"])
 def create_sport():
@@ -113,12 +114,10 @@ def create_sport():
     user_id = session["user_id"]
 
     classes = []
-    feeling = request.form["feeling"]
-    if feeling:
-        classes.append(("Fiilis", feeling))
-    load = request.form["load"]
-    if load:
-        classes.append(("Kuormittavuus", load))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
 
     sports.add_sport(sport, duration, distance, description, user_id, classes)
 

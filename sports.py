@@ -11,6 +11,18 @@ def add_sport(sport, duration, distance, description, user_id, classes):
     for title, value in classes:
         db.execute(sql, [sport_id, title, value])
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
 def get_classes(sport_id):
     sql = "SELECT title, value FROM sport_classes WHERE sport_id = ?"
     return db.query(sql, [sport_id])
