@@ -1,8 +1,8 @@
 import db
 
 def add_sport(sport, duration, distance, description, user_id, classes):
-    sql = """INSERT INTO sports (sport, duration, distance, description, user_id) 
-            VALUES (?, ?, ?, ?, ?)"""
+    sql = """INSERT INTO sports (sport, duration, distance, description, sent_at, user_id) 
+            VALUES (?, ?, ?, ?, strftime('%d-%m-%Y', 'now', 'localtime'), ?)"""
     db.execute(sql, [sport, duration, distance, description, user_id])
 
     sport_id = db.last_insert_id()
@@ -28,12 +28,12 @@ def get_classes(sport_id):
     return db.query(sql, [sport_id])
 
 def get_sports(user_id):
-    sql = "SELECT id, sport FROM sports WHERE sports.user_id = ? ORDER BY id DESC"
+    sql = "SELECT id, sport, sent_at FROM sports WHERE sports.user_id = ? ORDER BY id DESC"
 
     return db.query(sql, [user_id])
 
 def get_allsports():
-    sql = "SELECT id, sport FROM sports ORDER BY id DESC"
+    sql = "SELECT id, sport, sent_at FROM sports ORDER BY id DESC"
 
     return db.query(sql)
 
@@ -43,6 +43,7 @@ def get_sport(sport_id):
                     sports.duration,
                     sports.distance,
                     sports.description,
+                    sports.sent_at,
                     users.id user_id,
                     users.username
             FROM sports, users

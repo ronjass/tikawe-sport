@@ -10,6 +10,7 @@ CREATE TABLE sports (
     duration INTEGER,
     distance INTEGER,
     description TEXT,
+    send_at TEXT,
     user_id INTEGER REFERENCES users
 );
 
