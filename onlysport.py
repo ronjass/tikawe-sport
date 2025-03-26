@@ -19,7 +19,8 @@ def index():
     all_sports = sports.get_allsports()
     if session.get("user_id"):
         user_sports = sports.get_sports(session["user_id"])
-        return render_template("index.html", user_sports = user_sports, sports = all_sports)
+        user = users.get_user(session["user_id"])
+        return render_template("index.html", user_sports = user_sports, sports = all_sports, user=user)
     return render_template("index.html", sports = all_sports)
 
 @app.route("/user/<int:user_id>")
