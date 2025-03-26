@@ -206,4 +206,31 @@ def remove_sport(sport_id):
             return redirect("/")
     else:
         return redirect("/sport/" + str(sport_id))
+    
 
+@app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
+def remove_user(user_id):
+    require_login()
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+
+    if user["id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove_user.html", user=user)
+    if request.method == "POST":
+        if "remove" in request.form:
+
+            user_sports = sports.get_sports(user_id)
+            if user_sports:
+                for sport in user_sports:
+                    sports.remove_sport(sport["id"])
+            users.remove_user(user_id)
+            del session["user_id"]
+            del session["username"]
+            return redirect("/")
+        else:
+            return redirect("/user/" + str(user_id))
+    

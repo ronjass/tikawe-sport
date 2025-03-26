@@ -28,3 +28,7 @@ def check_login(username, password):
         return user_id
     else:
         return None
+    
+def remove_user(user_id):
+    sql = "DELETE FROM users WHERE id = ?"
+    db.execute(sql, [user_id])

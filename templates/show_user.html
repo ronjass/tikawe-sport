@@ -18,6 +18,10 @@
   </ul>
   <p>
     <a href="/">Takaisin etusivulle</a>
+    {% if session.user_id == user.id %}
+    <a href="/remove_user/{{ user.id }}">Poista käyttäjä</a>
+  </p>
+    {% endif %}
   </p>
 </body>
 
