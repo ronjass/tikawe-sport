@@ -15,10 +15,11 @@ OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilu
 * Tykkäysten antaminen muiden käyttäjien urheilusuorituksille
 * Tilastotietojen tarkastelu urheilusuorituksista käyttäjäsivulla
 
-## Sovelluksen toiminnallisuus 26.3.2025
+## Sovelluksen toiminnallisuus 27.3.2025
 
 * Rekisteröityminen, kirjautuminen ja tilin poistaminen
 * Urheilusuoritusten lisääminen, tarkastelu, muokkaaminen ja poistaminen
 * Urheilusuoritusten luokittelu fiiliksen ja kuormittavuuden mukaan
 * Urheilusuoritusten hakeminen lajin tai kuvauksen perusteella
 * Muiden käyttäjien urheilusuoritusten tarkastelu
+* Kommenttien lisääminen urheilusuorituksiin
