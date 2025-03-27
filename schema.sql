@@ -10,7 +10,7 @@ CREATE TABLE sports (
     duration INTEGER,
     distance INTEGER,
     description TEXT,
-    send_at TEXT,
+    sent_at TEXT,
     user_id INTEGER REFERENCES users
 );
 
@@ -25,4 +25,12 @@ CREATE TABLE sport_classes (
     sport_id INTEGER REFERENCES sports,
     title TEXT,
     value TEXT
+);
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY,
+    sport_id INTEGER REFERENCES sports,
+    user_id INTEGER REFERENCES users,
+    comment TEXT,
+    sent_at TEXT
 );

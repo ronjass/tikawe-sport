@@ -47,7 +47,8 @@ def show_sport(sport_id):
     if not sport:
         abort(404)
     classes = sports.get_classes(sport_id)
-    return render_template("show_sport.html", sport=sport, classes=classes)
+    comments = sports.get_comments(sport_id)
+    return render_template("show_sport.html", sport=sport, classes=classes, comments=comments)
 
 @app.route("/register")
 def register():
@@ -186,6 +187,22 @@ def update_sport():
             classes.append((title, value))
 
     sports.update_sport(sport_id, sport, duration, distance, description, classes)
+
+    return redirect("/sport/" + str(sport_id))
+
+@app.route("/create_comment", methods=["POST"])
+def create_comment():
+    require_login()
+    comment = request.form["comment"]
+    if len(comment) > 1000 or not comment:
+        abort(403)
+    sport_id = request.form["sport_id"]
+    sport = sports.get_sport(sport_id)
+    if not sport:
+        abort(403)
+    user_id = session["user_id"]
+
+    sports.add_comment(sport_id, user_id, comment)
 
     return redirect("/sport/" + str(sport_id))
 

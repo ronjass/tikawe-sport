@@ -80,3 +80,15 @@ def find_sports(query):
              ORDER BY id DESC"""
     like = "%" + query + "%"
     return db.query(sql, [like, like])
+
+def add_comment(sport_id, user_id, comment):
+    sql = """INSERT INTO comments (sport_id, user_id, comment, sent_at) 
+            VALUES (?, ?, ?, strftime('%d-%m-%Y %H:%M:%S', 'now', 'localtime'))"""
+    db.execute(sql, [sport_id, user_id, comment])
+
+def get_comments(sport_id):
+    sql = """SELECT comments.comment, comments.sent_at, users.id user_id, users.username
+             FROM comments, users
+             WHERE comments.sport_id = ? AND comments.user_id = users.id
+             ORDER BY comments.id"""
+    return db.query(sql, [sport_id])
