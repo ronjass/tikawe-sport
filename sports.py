@@ -68,6 +68,8 @@ def update_sport(sport_id, sport, duration, distance, description, classes):
         db.execute(sql, [sport_id, title, value])
 
 def remove_sport(sport_id):
+    sql = "DELETE FROM comments WHERE sport_id = ?"
+    db.execute(sql, [sport_id])
     sql = "DELETE FROM sport_classes WHERE sport_id = ?"
     db.execute(sql, [sport_id])
     sql = "DELETE FROM sports WHERE id = ?"
