@@ -18,7 +18,7 @@ CREATE TABLE classes (
     id INTEGER PRIMARY KEY,
     title TEXT,
     value TEXT
-)
+);
 
 CREATE TABLE sport_classes (
     id INTEGER PRIMARY KEY,
