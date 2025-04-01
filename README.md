@@ -23,3 +23,34 @@ OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilu
 * Urheilusuoritusten hakeminen lajin tai kuvauksen perusteella
 * Muiden käyttäjien urheilusuoritusten tarkastelu
 * Kommenttien lisääminen urheilusuorituksiin
+
+## Käyttöohjeet sovelluksen testaamiseen
+
+> [!NOTE]
+> Sovelluksen testaaminen vaatii, että tietokoneelle on asennettu python3 ja pip.
+
+Kloonaa projekti omalle tietokoneelle:
+```
+$ git clone https://github.com/ronjass/tikawe-sport.git
+```
+Navigoi projektihakemiston juureen ja luo projektille virtuaaliympäristö komennolla:
+```
+$ python3 -m venv venv
+```
+Käynnistä virtuaaliympäristö komennolla:
+```
+$ source venv/bin/activate
+```
+Asenna Flask virtuaaliympäristöön komennolla:
+```
+$ pip install flask
+```
+Alusta tietokannat komennoilla:
+```
+$ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
+```
+Käynnistä sovellus komennolla:
+```
+$ flask --app onlysport run
+```
