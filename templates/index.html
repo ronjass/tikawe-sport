@@ -9,26 +9,19 @@
   <h1>OnlySport</h1>
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id}}
-  </p>
-  <p>
-    <a href="/user/{{ user.id }}">Käyttäjäsivut</a>
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
-  <p>
-    <a href="/new_sport">Uusi urheilusuoritus</a>
-  </p>
-  {% else %}
-  <p>
-    <a href="/login">Kirjaudu sisään</a>
-    <a href="/register">Luo tunnus</a>
+    Olet kirjautunut nimellä <a href="/user/{{ user.id }}">{{ session.username }}</a>
   </p>
   {% endif %}
   <p>
-    <a href="/find_sport">Etsi urheilusuoritus</a>
-  </p>
+    <a href="/find_sport">Etsi urheilusuoritus</a> |
+    {% if session.username %}
+      <a href="/new_sport">Lisää urheilusuoritus</a> |
+      <a href="/logout">Kirjaudu ulos</a>
+    {% else %}
+      <a href="/login">Kirjaudu sisään</a> |
+      <a href="/register">Luo tunnus</a>
+    </p>
+    {% endif %}
 
   {% if session.username %}
   <h2>Omat urheilusuoritukset</h2>
