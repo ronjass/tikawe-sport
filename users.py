@@ -30,5 +30,7 @@ def check_login(username, password):
         return None
     
 def remove_user(user_id):
+    sql = "DELETE FROM comments WHERE user_id = ?"
+    db.execute(sql, [user_id])
     sql = "DELETE FROM users WHERE id = ?"
     db.execute(sql, [user_id])
