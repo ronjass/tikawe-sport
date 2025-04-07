@@ -34,3 +34,9 @@ CREATE TABLE comments (
     comment TEXT,
     sent_at TEXT
 );
+
+CREATE TABLE likes (
+    id INTEGER PRIMARY KEY,
+    sport_id INTEGER REFERENCES sports,
+    user_id INTEGER REFERENCES users
+);

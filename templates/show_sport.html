@@ -23,13 +23,23 @@
   </p>
   {% if classes %}
   {% for class in classes %}
-  <p>{{ class. title }}: {{ class.value }}</p>
+  <p>{{ class.title }}: {{ class.value }}</p>
   {% endfor %}
+  {% endif %}
+  <h2>Tykkäykset</h2>
+  <p>
+    Tykkäysten määrä: {{ likes_count }}
+  </p>
+  {% if session.user_id %}
+  <form action="/like" method="post">
+    <input type="hidden" name="sport_id" value="{{ sport.id }}" />
+    <input type="submit" value="Tykkää" />
+  </form>
   {% endif %}
   <h2>Kommentit</h2>
   {% for comment in comments %}
   <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
-  <p> {{comment.comment }} </p>
+  <p> {{ comment.comment }} </p>
   {% endfor %}
   {% if session.user_id %}
   <h2>Uusi kommentti:</h2>

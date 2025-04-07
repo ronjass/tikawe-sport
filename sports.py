@@ -94,3 +94,14 @@ def get_comments(sport_id):
              WHERE comments.sport_id = ? AND comments.user_id = users.id
              ORDER BY comments.id"""
     return db.query(sql, [sport_id])
+
+def add_like(sport_id, user_id):
+    sql = "SELECT * FROM likes WHERE sport_id = ? AND user_id = ?"
+    result = db.query(sql, [sport_id, user_id])
+    if not result:
+        sql = "INSERT INTO likes (sport_id, user_id) VALUES (?, ?)"
+        db.execute(sql, [sport_id, user_id])
+
+def get_likes_count(sport_id):
+    sql = "SELECT COUNT(*) AS count FROM likes WHERE sport_id = ?"
+    return db.query(sql, [sport_id])[0]['count']

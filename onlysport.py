@@ -48,7 +48,8 @@ def show_sport(sport_id):
         abort(404)
     classes = sports.get_classes(sport_id)
     comments = sports.get_comments(sport_id)
-    return render_template("show_sport.html", sport=sport, classes=classes, comments=comments)
+    likes_count = sports.get_likes_count(sport_id)
+    return render_template("show_sport.html", sport=sport, classes=classes, comments=comments, likes_count=likes_count)
 
 @app.route("/register")
 def register():
@@ -205,6 +206,21 @@ def create_comment():
     sports.add_comment(sport_id, user_id, comment)
 
     return redirect("/sport/" + str(sport_id))
+
+@app.route('/like', methods=['POST'])
+def like_sport():
+    require_login()
+        
+    if 'user_id' in session:
+        sport_id = request.form['sport_id']
+        user_id = session['user_id']
+        sport = sports.get_sport(sport_id)
+        if not sport:
+            abort(404)
+        sports.add_like(sport_id, user_id)
+        return redirect('/sport/' + str(sport_id))
+    else:
+        return redirect('/login')
 
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):
