@@ -7,8 +7,21 @@
 
 <body>
   <h1>Käyttäjä {{ user.username }}</h1>
+  {% if  user_sports | count  == 1 %}
+  <p>
+    Käyttäjä on lisännyt {{ user_sports | count }} urheilusuorituksen
+  </p>
+  {% endif %}
+  {% if  user_sports | count  > 1 or user_sports | count == 0 %}
   <p>
     Käyttäjä on lisännyt {{ user_sports | count }} urheilusuoritusta
+  </p>
+  {% endif %}
+  <p>
+    Liikuttu matka: {{ user_sports | sum(attribute='distance') }} km
+  </p>
+  <p>
+    Kulutettu aika: {{ user_sports | sum(attribute='duration') }} min
   </p>
   <h2>Urheilusuoritukset</h2>
   <ul>
