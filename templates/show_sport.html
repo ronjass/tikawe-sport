@@ -10,9 +10,11 @@
   <p>
     Kesto: {{ sport.duration }} min
   </p>
+  {% if sport.distance > 0 %}
   <p>
     Matka: {{ sport.distance }} km
   </p>
+  {% endif %}
   <p>
     Suorituksen kuvaus: {{ sport.description }}
   </p>

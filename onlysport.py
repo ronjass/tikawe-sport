@@ -109,7 +109,7 @@ def create_sport():
         abort(403)
     if not re.search("^[1-9][0-9]{0,2}$", duration):
         abort(403)
-    if not re.search("^[1-9][0-9]{0,2}$", distance):
+    if not re.search("^[0-9][0-9]{0,2}$", distance):
         abort(403)
     if not sport or not duration or not distance or not description:
         abort(403)
@@ -169,7 +169,7 @@ def update_sport():
         abort(403)
     if not re.search("^[1-9][0-9]{0,2}$", duration):
         abort(403)
-    if not re.search("^[1-9][0-9]{0,2}$", distance):
+    if not re.search("^[0-9][0-9]{0,2}$", distance):
         abort(403)
     if not sport or not duration or not distance or not description:
         abort(403)
