@@ -29,12 +29,14 @@
   <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
   <p> {{comment.comment }} </p>
   {% endfor %}
+  {% if session.user_id %}
   <h2>Uusi kommentti:</h2>
   <form action="/create_comment" method="post">
     <textarea name="comment" rows="8" cols="60" maxlength="1000" required></textarea>
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Lähetä" />
   </form>
+  {% endif %}
   <p>
     <a href="/">Takaisin etusivulle</a>
     {% if session.user_id == sport.user_id %}
