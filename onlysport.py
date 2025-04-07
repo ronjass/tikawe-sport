@@ -20,8 +20,8 @@ def index():
     if session.get("user_id"):
         user_sports = sports.get_sports(session["user_id"])
         user = users.get_user(session["user_id"])
-        return render_template("index.html", user_sports = user_sports, sports = all_sports, user=user)
-    return render_template("index.html", sports = all_sports)
+        return render_template("index.html", user_sports=user_sports, sports=all_sports, user=user)
+    return render_template("index.html", sports=all_sports)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -29,7 +29,7 @@ def show_user(user_id):
     if not user:
         abort(404)
     user_sports = users.get_sports(user_id)
-    return render_template("show_user.html", user=user, user_sports = user_sports)
+    return render_template("show_user.html", user=user, user_sports=user_sports)
 
 @app.route("/find_sport")
 def find_sport():
@@ -67,7 +67,7 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -242,6 +242,7 @@ def remove_user(user_id):
         if "remove" in request.form:
 
             user_sports = sports.get_sports(user_id)
+            print(user_sports)
             if user_sports:
                 for sport in user_sports:
                     sports.remove_sport(sport["id"])
