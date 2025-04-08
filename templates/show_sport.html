@@ -12,9 +12,8 @@
     Matka: {{ sport.distance }} km
   </p>
 {% endif %}
-<p>
-  Suorituksen kuvaus: {{ sport.description }}
-</p>
+<p> Suorituksen kuvaus: </p>
+<p>{{ sport.description | show_lines }}</p>
 <p>
   Urheilija: <a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
 </p>
