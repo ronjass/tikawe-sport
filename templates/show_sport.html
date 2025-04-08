@@ -1,61 +1,55 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ sport.sport }}</title>
-</head>
+{% block title %}{{ sport.sport }}{% endblock %}
 
-<body>
-  <h1>Suoritus ({{ sport.sent_at }}): {{ sport.sport }}</h1>
-  <p>
-    Kesto: {{ sport.duration }} min
-  </p>
-  {% if sport.distance > 0 %}
+{% block content %}
+<h2>Suoritus ({{ sport.sent_at }}): {{ sport.sport }}</h2>
+<p>
+  Kesto: {{ sport.duration }} min
+</p>
+{% if sport.distance > 0 %}
   <p>
     Matka: {{ sport.distance }} km
   </p>
-  {% endif %}
-  <p>
-    Suorituksen kuvaus: {{ sport.description }}
-  </p>
-  <p>
-    Urheilija: <a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
-  </p>
-  {% if classes %}
+{% endif %}
+<p>
+  Suorituksen kuvaus: {{ sport.description }}
+</p>
+<p>
+  Urheilija: <a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
+</p>
+{% if classes %}
   {% for class in classes %}
-  <p>{{ class.title }}: {{ class.value }}</p>
+    <p>{{ class.title }}: {{ class.value }}</p>
   {% endfor %}
-  {% endif %}
-  <h2>Tykkäykset</h2>
-  <p>
-    Tykkäysten määrä: {{ likes_count }}
-  </p>
-  {% if session.user_id %}
+{% endif %}
+<h3>Tykkäykset</h3>
+<p>
+  Tykkäysten määrä: {{ likes_count }}
+</p>
+{% if session.user_id %}
   <form action="/like" method="post">
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Tykkää" />
   </form>
-  {% endif %}
-  <h2>Kommentit</h2>
-  {% for comment in comments %}
+{% endif %}
+<h3>Kommentit</h3>
+{% for comment in comments %}
   <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
   <p> {{ comment.comment }} </p>
-  {% endfor %}
-  {% if session.user_id %}
-  <h2>Uusi kommentti:</h2>
+{% endfor %}
+{% if session.user_id %}
+  <h3>Uusi kommentti:</h3>
   <form action="/create_comment" method="post">
     <textarea name="comment" rows="8" cols="60" maxlength="1000" required></textarea>
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Lähetä" />
   </form>
-  {% endif %}
-  <p>
-    <a href="/">Takaisin etusivulle</a>
-    {% if session.user_id == sport.user_id %}
-    <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
-    <a href="/remove_sport/{{ sport.id }}">Poista</a>
-  </p>
-    {% endif %}
-</body>
-
-</html>
+{% endif %}
+<p>
+  {% if session.user_id == sport.user_id %}
+  <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
+  <a href="/remove_sport/{{ sport.id }}">Poista</a>
+</p>
+{% endif %}
+{% endblock %}

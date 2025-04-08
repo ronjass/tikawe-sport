@@ -1,33 +1,24 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Etsi urheilusuoritus</title>
-</head>
+{% block title %}Etsi urheilusuoritus{% endblock %}
 
-<body>
-  <h1>Etsi urheilusuoritus</h1>
-  <p>Voit etsiä urheilusuoritusta esimerkiksi lajin tai kuvauksen mukaan.</p>
-  <form action="/find_sport" method="get">
-    <p>
-        Hakusana: <input type="text" name="query" value="{{ query }}">
-    </p>
-    <input type="submit" value="Etsi">
-  </form>
-
+{% block content %}
+<h2>Etsi urheilusuoritus</h2>
+<p>Voit etsiä urheilusuoritusta esimerkiksi lajin tai kuvauksen mukaan.</p>
+<form action="/find_sport" method="get">
   <p>
-    <a href="/">Takaisin etusivulle</a>
+    Hakusana: <input type="text" name="query" value="{{ query }}">
   </p>
+  <input type="submit" value="Etsi">
+</form>
 
-  {% if query %}
+{% if query %}
   <h2>Hakutulokset</h2>
 
   <ul>
     {% for sport in results %}
-    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
+      <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
-</body>
-
-</html>
+{% endblock %}

@@ -1,47 +1,43 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Urheilusuorituksen muokkaus</title>
-</head>
+{% block title %}Urheilusuorituksen muokkaus{% endblock %}
 
-<body>
-  <h1>Urheilusuorituksen muokkaus</h1>
-  <form action="/update_sport" method="post">
+{% block content %}
+<h2>Urheilusuorituksen muokkaus</h2>
+<form action="/update_sport" method="post">
+  <p>
+    Laji: <br />
+    <input type="text" name="sport" value="{{ sport.sport }}" maxlength="50" required/>
+  </p>
+  <p>
+    Kesto: <br />
+    <input type="text" name="duration" value="{{ sport.duration }}" pattern="[1-9][0-9]{0,2}" required/> min
+  </p>
+  <p>
+    Matka: <br />
+    <input type="text" name="distance" value="{{ sport.distance }}" pattern="[0-9][0-9]{0,2}" required/> km
+  </p>
+  <p>
+    Kuvaus: <br />
+    <textarea name="description" rows="8" cols="60" maxlength="1000" required>{{ sport.description }}</textarea>
+  </p>
+  {% for class in all_classes %}
     <p>
-      Laji: <br />
-      <input type="text" name="sport" value="{{ sport.sport }}" maxlength="50" required/>
-    </p>
-    <p>
-      Kesto: <br />
-      <input type="text" name="duration" value="{{ sport.duration }}" pattern="[1-9][0-9]{0,2}" required/> min
-    </p>
-    <p>
-      Matka: <br />
-      <input type="text" name="distance" value="{{ sport.distance }}" pattern="[0-9][0-9]{0,2}" required/> km
-    </p>
-    <p>
-      Kuvaus: <br />
-      <textarea name="description" rows="8" cols="60" maxlength="1000" required>{{ sport.description }}</textarea>
-    </p>
-    {% for class in all_classes %}
-    <p>
-        {{ class }}: <br />
-        <select name="classes">
-            <option value="">(valitse)</option>
-        {% for option in all_classes[class] %}
-          {% if classes[class] == option %}
-            <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
-            {% else %}
-            <option value="{{ class }}:{{ option }}">{{ option }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        {% endfor %}
-    </p>
-    <input type="hidden" name="sport_id" value="{{ sport.id }}">
-    <input type="submit" value="Päivitä urheilusuoritus" />
-  </form>
-</body>
+    {{ class }}: <br />
+    <select name="classes">
+    <option value="">(valitse)</option>
+    {% for option in all_classes[class] %}
+      {% if classes[class] == option %}
+        <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+      {% else %}
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+  {% endfor %}
+  </p>
+  <input type="hidden" name="sport_id" value="{{ sport.id }}">
+  <input type="submit" value="Päivitä urheilusuoritus" />
+</form>
 
-</html>
+{% endblock %}

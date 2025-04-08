@@ -1,46 +1,29 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>OnlySport</title>
-</head>
+{% block title %}Onlysport{% endblock %}
 
-<body>
-  <h1>OnlySport</h1>
-  {% if session.username %}
+{% block content %}
+
+{% if session.username %}
   <p>
     Olet kirjautunut nimellä <a href="/user/{{ user.id }}">{{ session.username }}</a>
   </p>
-  {% endif %}
-  <p>
-    <a href="/find_sport">Etsi urheilusuoritus</a> |
-    {% if session.username %}
-      <a href="/new_sport">Lisää urheilusuoritus</a> |
-      <a href="/logout">Kirjaudu ulos</a>
-    {% else %}
-      <a href="/login">Kirjaudu sisään</a> |
-      <a href="/register">Luo tunnus</a>
-    </p>
-    {% endif %}
+{% endif %}
 
-  {% if session.username %}
+{% if session.username %}
   <h2>Omat urheilusuoritukset</h2>
   <ul>
     {% for sport in user_sports %}
-    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a></li>
+      <li><a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a></li>
     {% endfor %}
   </ul>
   {% endif %}
-</body>
-
-</html>
 
 <h2>Kaikki urheilusuoritukset</h2>
   <ul>
     {% for sport in sports %}
-    <li><a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a></li>
+      <li><a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a></li>
     {% endfor %}
   </ul>
-</body>
 
-</html>
+{% endblock %}
