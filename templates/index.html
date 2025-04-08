@@ -5,12 +5,6 @@
 {% block content %}
 
 {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä <a href="/user/{{ user.id }}">{{ session.username }}</a>
-  </p>
-{% endif %}
-
-{% if session.username %}
   <h2>Omat urheilusuoritukset</h2>
   <ul>
     {% for sport in user_sports %}
