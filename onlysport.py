@@ -242,8 +242,8 @@ def remove_sport(sport_id):
             sports.remove_sport(sport_id)
             flash("Urheilusuorituksen poistaminen onnistui.")
             return redirect("/")
-    else:
-        return redirect("/sport/" + str(sport_id))
+        else:
+            return redirect("/sport/" + str(sport_id))
     
 
 @app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
