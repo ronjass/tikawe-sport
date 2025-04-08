@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, flash, redirect, render_template, request, session
 import db
 import config
 import sports
@@ -51,23 +51,25 @@ def show_sport(sport_id):
     likes_count = sports.get_likes_count(sport_id)
     return render_template("show_sport.html", sport=sport, classes=classes, comments=comments, likes_count=likes_count)
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
-
-@app.route("/create", methods=["POST"])
-def create():
-    username = request.form["username"]
-    password1 = request.form["password1"]
-    password2 = request.form["password2"]
-    if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+    if request.method == "GET":
+        return render_template("register.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+        if password1 != password2:
+            flash("VIRHE: salasanat eivät ole samat")
+            return redirect("/register")
     
-    try:
-        users.create_user(username, password1)
-    except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        try:
+            users.create_user(username, password1)
+        except sqlite3.IntegrityError:
+            flash("VIRHE: tunnus on jo varattu")
+            return redirect("/register")
 
+    flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.")
     return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -84,7 +86,8 @@ def login():
             session["username"] = username
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: väärä tunnus tai salasana")
+            return redirect("/login")
 
 @app.route("/logout")
 def logout():
@@ -237,6 +240,7 @@ def remove_sport(sport_id):
     if request.method == "POST":
         if "remove" in request.form:
             sports.remove_sport(sport_id)
+            flash("Urheilusuorituksen poistaminen onnistui.")
             return redirect("/")
     else:
         return redirect("/sport/" + str(sport_id))
@@ -258,13 +262,13 @@ def remove_user(user_id):
         if "remove" in request.form:
 
             user_sports = sports.get_sports(user_id)
-            print(user_sports)
             if user_sports:
                 for sport in user_sports:
                     sports.remove_sport(sport["id"])
             users.remove_user(user_id)
             del session["user_id"]
             del session["username"]
+            flash("Käyttäjän poistaminen onnistui.")
             return redirect("/")
         else:
             return redirect("/user/" + str(user_id))
