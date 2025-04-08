@@ -8,8 +8,9 @@
 <p>Käyttäjän poistaminen poistaa myös käyttäjän lisäämät urheilusuoritukset.</p>
 <p>Toimintoa ei voi peruuttaa.</p>
 <form action="/remove_user/{{ user.id }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="remove" value="Poista käyttäjä">
   <input type="submit" name="back" value="Palaa takaisin">
 </form>
 
-{% endblock %}
+{% endblock %}3

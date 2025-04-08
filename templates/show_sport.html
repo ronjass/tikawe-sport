@@ -28,6 +28,7 @@
 </p>
 {% if session.user_id %}
   <form action="/like" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Tykkää" />
   </form>
@@ -41,6 +42,7 @@
   <h3>Uusi kommentti:</h3>
   <form action="/create_comment" method="post">
     <textarea name="comment" rows="8" cols="60" maxlength="1000" required></textarea>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Lähetä" />
   </form>

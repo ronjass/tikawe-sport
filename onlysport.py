@@ -7,12 +7,19 @@ import sports
 import users
 import re
 import markupsafe
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 @app.template_filter()
@@ -91,6 +98,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("VIRHE: väärä tunnus tai salasana")
@@ -112,6 +120,7 @@ def new_sport():
 @app.route("/create_sport", methods=["POST"])
 def create_sport():
     require_login()
+    check_csrf()
     sport = request.form["sport"]
     duration = request.form["duration"]
     distance = request.form["distance"]
@@ -163,6 +172,7 @@ def edit_sport(sport_id):
 @app.route("/update_sport", methods=["POST"])
 def update_sport():
     require_login()
+    check_csrf()
     sport_id = request.form["sport_id"]
     user_sport = sports.get_sport(sport_id)
     if not user_sport:
@@ -204,6 +214,7 @@ def update_sport():
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
     require_login()
+    check_csrf()
     comment = request.form["comment"]
     if len(comment) > 1000 or not comment:
         abort(403)
@@ -220,6 +231,7 @@ def create_comment():
 @app.route('/like', methods=['POST'])
 def like_sport():
     require_login()
+    check_csrf()
         
     if 'user_id' in session:
         sport_id = request.form['sport_id']
@@ -245,6 +257,7 @@ def remove_sport(sport_id):
     if request.method == "GET":
         return render_template("remove_sport.html", sport=sport)
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             sports.remove_sport(sport_id)
             flash("Urheilusuorituksen poistaminen onnistui.")
@@ -266,6 +279,7 @@ def remove_user(user_id):
     if request.method == "GET":
         return render_template("remove_user.html", user=user)
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
 
             user_sports = sports.get_sports(user_id)

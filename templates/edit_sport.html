@@ -36,6 +36,7 @@
     </select>
   {% endfor %}
   </p>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="hidden" name="sport_id" value="{{ sport.id }}">
   <input type="submit" value="Päivitä urheilusuoritus" />
 </form>

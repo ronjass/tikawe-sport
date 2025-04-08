@@ -6,6 +6,7 @@
 <h2>Urheilusuorituksen poisto</h2>
 <p>Haluatko varmasti poistaa urheilusuorituksen {{ sport.sport }}?</p>
 <form action="/remove_sport/{{ sport.id }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="remove" value="Poista urheilusuoritus">
   <input type="submit" name="back" value="Palaa takaisin">
 </form>
