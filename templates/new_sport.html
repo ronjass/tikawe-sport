@@ -3,27 +3,24 @@
 {% block title %}Uusi urheilusuoritus{% endblock %}
 
 {% block content %}
+<div class="block">
 <h2>Uusi urheilusuoritus</h2>
 <form action="/create_sport" method="post">
   <p>
-    Laji: <br />
+    <b>Laji: </b><br />
     <input type="text" name="sport" maxlength="50" required/>
   </p>
   <p>
-    Kesto: <br />
+    <b>Kesto: </b><br />
     <input type="text" name="duration" pattern="[1-9][0-9]{0,2}" required/> min
   </p>
   <p>
-    Matka: <br />
+    <b>Matka: </b><br />
     <input type="text" name="distance" pattern="[0-9][0-9]{0,2}" required/> km
-  </p>
-  <p>
-    Kuvaus: <br />
-    <textarea name="description" rows="8" cols="60" maxlength="1000" required></textarea>
   </p>
   {% for class in classes %}
   <p>
-    {{ class }}: <br />
+    <b>{{ class }}: </b><br />
     <select name="classes">
     <option value="">(valitse)</option>
     {% for option in classes[class] %}
@@ -32,8 +29,13 @@
     </select>
   {% endfor %}
   </p>
+  <p>
+    <b>Kuvaus: </b><br />
+    <textarea name="description" rows="8" cols="60" maxlength="1000" required></textarea>
+  </p>
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Luo urheilusuoritus" />
   </form>
+</div>
 
 {% endblock %}
