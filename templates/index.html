@@ -5,6 +5,7 @@
 {% block content %}
 
 {% if session.username %}
+<div class="block">
   <h2>Omat urheilusuoritukset</h2>
   {% for sport in user_sports %}
     <div class="sport">
@@ -13,8 +14,10 @@
     </p>
     </div>  
   {% endfor %}
+</div>
 {% endif %}
 
+<div class="block">
 <h2>Kaikki urheilusuoritukset</h2>
 {% for sport in sports %}
   <div class="sport">
@@ -24,5 +27,6 @@
   </p>
   </div>
 {% endfor %}
+</div>
 
 {% endblock %}

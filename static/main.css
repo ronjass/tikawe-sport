@@ -5,16 +5,24 @@ body {
     background-color: floralwhite;
 }
 
+.block {
+    border: 2px solid black;
+    margin: 1em;
+    padding: 0.2em 0.5em;
+    background-color: whitesmoke;
+}
+
 .header {
     font-variant: small-caps;
     font-size: 40px;
+    margin: auto;
 }
 
 .nav {
     border: 2px solid black;
     margin: auto;
     padding: 0.5em 0.5em;
-    background-color: linen;
+    background-color: whitesmoke;
 }
 
 .sport {

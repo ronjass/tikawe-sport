@@ -10,17 +10,13 @@
 <div class="header">
   <h1>OnlySport☺︎</h1>
 </div>
-  {% if session.user_id %}
-    <p>
-      <b>Olet kirjautunut nimellä <a href="/user/{{ session.user_id }}"></b>{{ session.username }}</a>
-    </p>
-  {% endif %}
 <div class="nav">
   <a href="/">Etusivu</a> |
   <a href="/find_sport">Etsi urheilusuoritus</a> |
   {% if session.username %}
     <a href="/new_sport">Lisää urheilusuoritus</a> |
-    <a href="/logout">Kirjaudu ulos</a>
+    <a href="/logout">Kirjaudu ulos</a> |
+    <a href="/user/{{ session.user_id }}"></b>{{ session.username }}</a>
     {% else %}
     <a href="/login">Kirjaudu sisään</a> |
     <a href="/register">Luo tunnus</a>
@@ -34,6 +30,5 @@
 {% endfor %}
 
 {% block content %}{% endblock %}
-
 </body>
 </html>
