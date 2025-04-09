@@ -33,7 +33,10 @@ def get_sports(user_id):
     return db.query(sql, [user_id])
 
 def get_allsports():
-    sql = "SELECT id, sport, sent_at FROM sports ORDER BY id DESC"
+    sql = """SELECT sports.id, sports.sport, sports.sent_at, users.id user_id, users.username
+            FROM sports, users
+            WHERE sports.user_id = users.id
+            ORDER BY sports.id DESC"""
 
     return db.query(sql)
 
