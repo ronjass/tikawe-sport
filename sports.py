@@ -81,7 +81,7 @@ def remove_sport(sport_id):
     db.execute(sql, [sport_id])
 
 def find_sports(query):
-    sql = """SELECT id, sport
+    sql = """SELECT id, sport, sent_at
              FROM sports
              WHERE sport LIKE ? OR description LIKE ?
              ORDER BY id DESC"""
