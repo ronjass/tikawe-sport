@@ -1,13 +1,25 @@
 body {
     margin: auto;
     max-width: 50em;
-    font-family: sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     background-color: floralwhite;
+}
+
+.header {
+    font-variant: small-caps;
+    font-size: 40px;
+}
+
+.nav {
+    border: 2px solid black;
+    margin: auto;
+    padding: 0.5em 0.5em;
+    background-color: linen;
 }
 
 .sport {
     border: 2px solid black;
     margin: 1em;
     padding: 0.2em 0.5em;
-    background-color: white;
+    background-color: linen;
 }

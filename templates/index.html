@@ -9,7 +9,7 @@
   {% for sport in user_sports %}
     <div class="sport">
     <p>
-    <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
+      <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
     </p>
     </div>  
   {% endfor %}
@@ -19,8 +19,8 @@
 {% for sport in sports %}
   <div class="sport">
   <p>
-  Suoritus: <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a> <br />
-  Urheilija: <a href="/user/{{ sport.user_id}}">{{ sport.username }}</a>
+  <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a> <br />
+  <b>Urheilija:</b> <a href="/user/{{ sport.user_id}}">{{ sport.username }}</a>
   </p>
   </div>
 {% endfor %}

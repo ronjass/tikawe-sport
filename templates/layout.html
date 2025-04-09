@@ -7,12 +7,15 @@
 </head>
 
 <body>
-<h1>OnlySport</h1>
+<div class="header">
+  <h1>OnlySport</h1>
+</div>
   {% if session.user_id %}
     <p>
-      Olet kirjautunut nimellä <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
+      <b>Olet kirjautunut nimellä <a href="/user/{{ session.user_id }}"></b>{{ session.username }}</a>
     </p>
   {% endif %}
+<div class="nav">
   <a href="/">Etusivu</a> |
   <a href="/find_sport">Etsi urheilusuoritus</a> |
   {% if session.username %}
@@ -22,7 +25,7 @@
     <a href="/login">Kirjaudu sisään</a> |
     <a href="/register">Luo tunnus</a>
     {% endif %}
-</p>
+</div>
 
 {% for message in get_flashed_messages() %}
   <p>
