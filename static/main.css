@@ -9,7 +9,7 @@ body {
     border: 2px solid black;
     margin: 1em;
     padding: 0.2em 0.5em;
-    background-color: whitesmoke;
+    background-color: white;
 }
 
 .header {
@@ -22,7 +22,7 @@ body {
     border: 2px solid black;
     margin: auto;
     padding: 0.5em 0.5em;
-    background-color: whitesmoke;
+    background-color: white;
 }
 
 .sport {

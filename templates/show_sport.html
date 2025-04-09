@@ -1,27 +1,36 @@
 {% extends "layout.html" %}
-
 {% block title %}{{ sport.sport }}{% endblock %}
 
 {% block content %}
+<div class="block">
 <h2>Suoritus ({{ sport.sent_at }}): {{ sport.sport }}</h2>
+<div class="sport">
 <p>
-  Kesto: {{ sport.duration }} min
+  <b>Urheilija: </b><a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
+</p>
+<p>
+  <b>Kesto: </b>{{ sport.duration }} min
 </p>
 {% if sport.distance > 0 %}
   <p>
-    Matka: {{ sport.distance }} km
+    <b>Matka: </b>{{ sport.distance }} km
   </p>
 {% endif %}
-<p> Suorituksen kuvaus: </p>
-<p>{{ sport.description | show_lines }}</p>
-<p>
-  Urheilija: <a href="/user/{{ sport.user_id }}">{{ sport.username }}</a>
-</p>
 {% if classes %}
   {% for class in classes %}
-    <p>{{ class.title }}: {{ class.value }}</p>
+    <p><b>{{ class.title }}: </b>{{ class.value }}</p>
   {% endfor %}
 {% endif %}
+<b> Suorituksen kuvaus: </b>
+<p>{{ sport.description | show_lines }}</p>
+<p>
+  {% if session.user_id == sport.user_id %}
+  <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
+  <a href="/remove_sport/{{ sport.id }}">Poista</a>
+  {% endif %}
+</p>
+</div>
+<div class="sport">
 <h3>Tykkäykset</h3>
 <p>
   Tykkäyksiä {{ likes_count }} 
@@ -33,11 +42,17 @@
     <input type="submit" value="❤︎" />
   </form>
 {% endif %}
+</div>
+<div class="sport">
 <h3>Kommentit</h3>
-{% for comment in comments %}
-  <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
-  <p> {{ comment.comment }} </p>
-{% endfor %}
+{% if comments | count == 0 %}
+  <p>Ei kommentteja</p>
+{% else %}
+  {% for comment in comments %}
+    <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
+    <p> {{ comment.comment | show_lines }} </p>
+  {% endfor %}
+{% endif %}
 {% if session.user_id %}
   <h3>Uusi kommentti:</h3>
   <form action="/create_comment" method="post">
@@ -47,10 +62,6 @@
     <input type="submit" value="Lähetä" />
   </form>
 {% endif %}
-<p>
-  {% if session.user_id == sport.user_id %}
-  <a href="/edit_sport/{{ sport.id }}">Muokkaa</a>
-  <a href="/remove_sport/{{ sport.id }}">Poista</a>
-</p>
-{% endif %}
+</div>
+</div>
 {% endblock %}
