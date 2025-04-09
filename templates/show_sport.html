@@ -24,13 +24,13 @@
 {% endif %}
 <h3>Tykkäykset</h3>
 <p>
-  Tykkäysten määrä: {{ likes_count }}
+  Tykkäyksiä {{ likes_count }} 
 </p>
 {% if session.user_id %}
   <form action="/like" method="post">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
-    <input type="submit" value="Tykkää" />
+    <input type="submit" value="❤︎" />
   </form>
 {% endif %}
 <h3>Kommentit</h3>
