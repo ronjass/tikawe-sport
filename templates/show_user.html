@@ -3,33 +3,29 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
+<div class="block">
 <h2>Käyttäjä {{ user.username }}</h2>
-{% if  user_sports | count  == 1 %}
-  <p>
-    Käyttäjä on lisännyt {{ user_sports | count }} urheilusuorituksen
-  </p>
-{% endif %}
-{% if  user_sports | count  > 1 or user_sports | count == 0 %}
-  <p>
-    Käyttäjä on lisännyt {{ user_sports | count }} urheilusuoritusta
-  </p>
-{% endif %}
 <p>
-  Liikuttu matka: {{ user_sports | sum(attribute='distance') }} km
+  <b>Lisättyjä urheilusuorituksia: </b>{{ user_sports | count }} 
 </p>
 <p>
-  Kulutettu aika: {{ user_sports | sum(attribute='duration') }} min
+  <b>Liikuttu matka: </b>{{ user_sports | sum(attribute='distance') }} km
 </p>
-<h3>Urheilusuoritukset</h3>
-<ul>
+<p>
+  <b>Kulutettu aika: </b>{{ user_sports | sum(attribute='duration') }} min
+</p>
+<h3>Urheilusuoritukset:</h3>
 {% for sport in user_sports %}
-  <li><a href="/sport/{{ sport.id }}">{{ sport.sport }}</a></li>
+  <div class="sport">
+  <p>
+    <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
+  </p>
+  </div> 
 {% endfor %}
-</ul>
 <p>
 {% if session.user_id == user.id %}
   <a href="/remove_user/{{ user.id }}">Poista käyttäjä</a>
 </p>
 {% endif %}
-
+</div>
 {% endblock %}
