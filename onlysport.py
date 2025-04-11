@@ -31,7 +31,7 @@ def show_lines(content):
 
 @app.route("/")
 def index():
-    all_sports = sports.get_all_sports()
+    all_sports = sports.get_all_sports(5, 0)
     if session.get("user_id"):
         user_sports = sports.get_user_sports(session["user_id"], 5, 0)
         user = users.get_user(session["user_id"])
@@ -75,6 +75,24 @@ def show_user_sports(user_id, page=1):
     current_page_sports = sports.get_user_sports(user_id, page_size, offset)
 
     return render_template("show_user_sports.html", user=user, user_sports=current_page_sports, page=page, total_pages=total_pages)
+
+@app.route("/show_all_sports/<int:page>")
+def show_all_sports(page=1):
+    page_size = 10
+    total_sports_count = sports.get_total_sports_count()
+
+    total_pages = ceil(total_sports_count / page_size)
+    total_pages = max(total_pages, 1)
+
+    if page < 1:
+        return redirect("/show_all_sports/1")
+    elif page > total_pages:
+        return redirect("/show_all_sports/" + str(total_pages))
+    
+    offset = (page - 1) * page_size
+    current_page_sports = sports.get_all_sports(page_size, offset)
+
+    return render_template("show_all_sports.html", sports=current_page_sports, page=page, total_pages=total_pages)
 
 @app.route("/sport/<int:sport_id>")
 def show_sport(sport_id):
