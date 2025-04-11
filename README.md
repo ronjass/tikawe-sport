@@ -2,18 +2,25 @@
 
 ## Sovelluksen tarkoitus
 
-OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilua ja dataa. Käyttäjä voi tehdä sovellukseen tilin, jolloin hän voi tallentaa sovellukseen urheilusuorituksiaan sekä tarkastella muiden käyttäjien urheilusuorituksia.
+OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilua ja dataa. Sovelluksen perusideana on, että kirjautuneet käyttäjät voivat tallentaa sivustolle urheilusuorituksiaan. Sovellus tuo urheilua rakastavat ihmiset yhteen, sillä sovelluksessa voi tarkastella muiden lisäämiä urheilusuorituksia, ja lisäksi kirjautuneet käyttäjät voivat kommentoida urheilusuorituksia ja tykätä niistä.
 
 ## Sovelluksen toiminnallisuus
 
-- [x] Rekisteröityminen, kirjautuminen, käyttäjäasetusten muuttaminen ja tilin poistaminen
-- [x] Urheilusuoritusten lisääminen, tarkastelu ja poistaminen
-- [x] Urheilusuoritusten luokittelu (esim. fiilis, kuormittavuus)
-- [x] Urheilusuoritusten hakeminen lajin tai kuvauksen perusteella
-- [x] Muiden käyttäjien urheilusuoritusten tarkastelu
-- [x] Urheilusuoritusten kommentointi
-- [ ] Tykkäysten antaminen muiden käyttäjien urheilusuorituksille
-- [x] Tilastotietojen tarkastelu urheilusuorituksista käyttäjäsivulla
+✅ Rekisteröityminen, kirjautuminen ja tilin poistaminen
+
+✅ Urheilusuoritusten lisääminen, tarkastelu ja poistaminen
+
+✅ Urheilusuoritusten luokittelu (esim. fiilis, kuormittavuus)
+
+✅ Urheilusuoritusten hakeminen lajin tai kuvauksen perusteella
+
+✅ Muiden käyttäjien urheilusuoritusten tarkastelu
+
+✅ Urheilusuoritusten kommentointi
+
+✅ Tykkäysten antaminen urheilusuorituksille
+
+✅ Tilastotietojen tarkastelu urheilusuorituksista käyttäjäsivulla
 
 ## Käyttöohjeet sovelluksen testaamiseen
 
