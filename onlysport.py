@@ -56,25 +56,25 @@ def find_sport():
         results = []
     return render_template("find_sport.html", query=query, results=results)
 
-@app.route("/show_user_sports/<int:page>")
-def show_user_sports(page=1):
-    page_size = 3
-    if session.get("user_id"):
-        user_id = session["user_id"]
+@app.route("/show_user_sports/<int:user_id>/<int:page>")
+def show_user_sports(user_id, page=1):
+    page_size = 10
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    user_sports_count = sports.get_user_sports_count(user_id)
+    total_pages = ceil(user_sports_count / page_size)
+    total_pages = max(total_pages, 1)
 
-        user_sports_count = sports.get_user_sports_count(user_id)
-        total_pages = ceil(user_sports_count / page_size)
-        total_pages = max(total_pages, 1)
+    if page < 1:
+        return redirect("/show_user_sports/1")
+    elif page > total_pages:
+        return redirect("/show_user_sports/" + str(total_pages))
 
-        if page < 1:
-            return redirect("/show_user_sports/1")
-        elif page > total_pages:
-            return redirect("/show_user_sports/" + str(total_pages))
+    offset = (page - 1) * page_size
+    current_page_sports = sports.get_sports(user_id, page_size, offset)
 
-        offset = (page - 1) * page_size
-        current_page_sports = sports.get_sports(user_id, page_size, offset)
-
-        return render_template("show_user_sports.html", user_sports=current_page_sports, page=page, total_pages=total_pages)
+    return render_template("show_user_sports.html", user=user, user_sports=current_page_sports, page=page, total_pages=total_pages)
 
 @app.route("/sport/<int:sport_id>")
 def show_sport(sport_id):

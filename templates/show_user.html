@@ -14,14 +14,7 @@
 <p>
   <b>Kulutettu aika: </b>{{ user_sports | sum(attribute='duration') }} min
 </p>
-<h3>Urheilusuoritukset:</h3>
-{% for sport in user_sports %}
-  <div class="sport">
-  <p>
-    <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
-  </p>
-  </div> 
-{% endfor %}
+<a href="/show_user_sports/{{ user.id }}/1">Käyttäjän lisäämät urheilusuoritukset</a>
 <p>
 {% if session.user_id == user.id %}
   <a href="/remove_user/{{ user.id }}">Poista käyttäjä</a>

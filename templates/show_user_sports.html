@@ -4,9 +4,13 @@
 
 {% block content %}
 
-{% if session.username %}
+
 <div class="block">
-  <h2>Kaikki omat urheilusuoritukset</h2>
+{% if session.username == user.username %}
+    <h2>Kaikki omat urheilusuoritukset</h2>
+{% else %}
+    <h2>Kaikki käyttäjän {{ user.username }} lisäämät urheilusuoritukset</h2>
+{% endif %}
   {% for sport in user_sports %}
     <div class="sport">
     <p>
@@ -16,13 +20,12 @@
 {% endfor %}
 <div>
 {% if page > 1 %}
-    <a href="/show_user_sports/{{ page - 1 }}">&lt;&lt;</a>
+    <a href="/show_user_sports/{{ user.id }}/{{ page - 1 }}">&lt;&lt;</a>
 {% endif %}
     Sivu {{ page }} / {{ total_pages }}
 {% if page < total_pages %}
-    <a href="/show_user_sports/{{ page + 1 }}">&gt;&gt;</a>
+    <a href="/show_user_sports/{{ user.id }}/{{ page + 1 }}">&gt;&gt;</a>
 {% endif %}
 </div>
 </div>
-{% endif %}
 {% endblock %}
