@@ -49,8 +49,9 @@
   <p>Ei kommentteja</p>
 {% else %}
   {% for comment in comments %}
-    <p> <a href="/user/{{ comment.user_id }}">{{ comment.username }} ({{ comment.sent_at }}): </a></p>
+    <b> <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a> ({{ comment.sent_at }}):</b>
     <p> {{ comment.comment | show_lines }} </p>
+    <hr />
   {% endfor %}
 {% endif %}
 {% if session.user_id %}
