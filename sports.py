@@ -27,10 +27,17 @@ def get_classes(sport_id):
     sql = "SELECT title, value FROM sport_classes WHERE sport_id = ?"
     return db.query(sql, [sport_id])
 
-def get_sports(user_id):
-    sql = "SELECT id, sport, sent_at FROM sports WHERE sports.user_id = ? ORDER BY id DESC"
+def get_user_sports_count(user_id):
+    sql = "SELECT COUNT(*) FROM sports WHERE user_id = ?"
+    result = db.query(sql, [user_id])
+    return result[0][0]
 
-    return db.query(sql, [user_id])
+def get_sports(user_id, limit, offset):
+    sql = """SELECT id, sport, sent_at 
+             FROM sports WHERE sports.user_id = ? 
+             ORDER BY id DESC LIMIT ? OFFSET ?"""
+
+    return db.query(sql, [user_id, limit, offset])
 
 def get_allsports():
     sql = """SELECT sports.id, sports.sport, sports.sent_at, users.id user_id, users.username

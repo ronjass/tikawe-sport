@@ -6,19 +6,20 @@
 
 {% if session.username %}
 <div class="block">
-  <h2>Omat urheilusuoritukset</h2>
+  <h2>Viimeksi lisätyt omat urheilusuoritukset</h2>
   {% for sport in user_sports %}
     <div class="sport">
     <p>
       <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
     </p>
     </div>  
-  {% endfor %}
+{% endfor %}
+<a href="/show_user_sports/1">Kaikki omat urheilusuoritukset</a>
 </div>
 {% endif %}
 
 <div class="block">
-<h2>Kaikki urheilusuoritukset</h2>
+<h2>Viimeksi lisätyt urheilusuoritukset</h2>
 {% for sport in sports %}
   <div class="sport">
   <p>
@@ -27,6 +28,7 @@
   </p>
   </div>
 {% endfor %}
+<a href="/show_all_sports">Kaikki urheilusuoritukset</a>
 </div>
 
 {% endblock %}
