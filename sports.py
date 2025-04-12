@@ -32,13 +32,20 @@ def get_user_sports_count(user_id):
     result = db.query(sql, [user_id])
     return result[0][0]
 
-def get_user_sports(user_id, limit, offset):
+def get_user_sports_limit(user_id, limit, offset):
     sql = """SELECT id, sport, sent_at 
              FROM sports WHERE sports.user_id = ? 
              ORDER BY id DESC 
              LIMIT ? OFFSET ?"""
 
     return db.query(sql, [user_id, limit, offset])
+
+def get_user_sports(user_id):
+    sql = """SELECT id, sport, sent_at 
+             FROM sports WHERE sports.user_id = ? 
+             ORDER BY id DESC"""
+
+    return db.query(sql, [user_id])
 
 def get_total_sports_count():
     sql = "SELECT COUNT(*) FROM sports"
