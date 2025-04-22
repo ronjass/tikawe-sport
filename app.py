@@ -112,16 +112,16 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            flash("VIRHE: salasanat eivät ole samat")
+            flash("VIRHE: salasanat eivät ole samat", "error")
             return redirect("/register")
     
         try:
             users.create_user(username, password1)
         except sqlite3.IntegrityError:
-            flash("VIRHE: tunnus on jo varattu")
+            flash("VIRHE: tunnus on jo varattu", "error")
             return redirect("/register")
 
-    flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.")
+    flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.", "info")
     return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -139,7 +139,7 @@ def login():
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
-            flash("VIRHE: väärä tunnus tai salasana")
+            flash("VIRHE: väärä tunnus tai salasana", "error")
             return redirect("/login")
 
 @app.route("/logout")
@@ -298,7 +298,7 @@ def remove_sport(sport_id):
         check_csrf()
         if "remove" in request.form:
             sports.remove_sport(sport_id)
-            flash("Urheilusuorituksen poistaminen onnistui.")
+            flash("Urheilusuorituksen poistaminen onnistui.", "info")
             return redirect("/")
         else:
             return redirect("/sport/" + str(sport_id))
@@ -327,7 +327,7 @@ def remove_user(user_id):
             users.remove_user(user_id)
             del session["user_id"]
             del session["username"]
-            flash("Käyttäjän poistaminen onnistui.")
+            flash("Käyttäjän poistaminen onnistui.", "info")
             return redirect("/")
         else:
             return redirect("/user/" + str(user_id))

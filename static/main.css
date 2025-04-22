@@ -33,9 +33,16 @@ body {
     background-color: linen;
 }
 
-.info {
+.error {
     border: 2px solid black;
     margin: 1em;
     padding: 0.5em;
     background-color: tomato;
+}
+
+.info {
+    border: 2px solid black;
+    margin: 1em;
+    padding: 0.5em;
+    background-color: lightgreen;
 }
