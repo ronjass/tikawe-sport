@@ -1,14 +1,13 @@
+import config
+import markupsafe
+from math import ceil
+import re
 import sqlite3
+import secrets
 from flask import Flask
 from flask import abort, flash, redirect, render_template, request, session
-from math import ceil
-import db
-import config
 import sports
 import users
-import re
-import markupsafe
-import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -267,21 +266,21 @@ def create_comment():
 
     return redirect("/sport/" + str(sport_id))
 
-@app.route('/like', methods=['POST'])
+@app.route("/like", methods=["POST"])
 def like_sport():
     require_login()
     check_csrf()
         
-    if 'user_id' in session:
-        sport_id = request.form['sport_id']
-        user_id = session['user_id']
+    if "user_id" in session:
+        sport_id = request.form["sport_id"]
+        user_id = session["user_id"]
         sport = sports.get_sport(sport_id)
         if not sport:
             abort(404)
         sports.add_like(sport_id, user_id)
-        return redirect('/sport/' + str(sport_id))
+        return redirect("/sport/" + str(sport_id))
     else:
-        return redirect('/login')
+        return redirect("/login")
 
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):

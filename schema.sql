@@ -10,7 +10,7 @@ CREATE TABLE sports (
     duration INTEGER,
     distance INTEGER,
     description TEXT,
-    sent_at TEXT,
+    sent_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     user_id INTEGER REFERENCES users
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE comments (
     sport_id INTEGER REFERENCES sports,
     user_id INTEGER REFERENCES users,
     comment TEXT,
-    sent_at TEXT
+    sent_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
 CREATE TABLE likes (

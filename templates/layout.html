@@ -16,7 +16,7 @@
   {% if session.username %}
     <a href="/new_sport">Lisää urheilusuoritus</a> |
     <a href="/logout">Kirjaudu ulos</a> |
-    <a href="/user/{{ session.user_id }}"></b>{{ session.username }}</a>
+    <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
     {% else %}
     <a href="/login">Kirjaudu sisään</a> |
     <a href="/register">Luo tunnus</a>
