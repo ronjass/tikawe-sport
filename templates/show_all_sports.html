@@ -6,14 +6,17 @@
 
 <div class="block">
 <h2>Kaikki urheilusuoritukset</h2>
-{% for sport in sports %}
-    <div class="sport">
-    <p>
-    <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a> <br />
-    <b>Urheilija:</b> <a href="/user/{{ sport.user_id}}">{{ sport.username }}</a>
-    </p>
-    </div>
-{% endfor %}
+{% if sports | count == 0 %}
+  <p>Kukaan ei ole vielä lisännyt urheilusuoritusta</p>
+{% else %}
+    {% for sport in sports %}
+        <div class="sport">
+        <p>
+        <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a> <br />
+        <b>Urheilija:</b> <a href="/user/{{ sport.user_id}}">{{ sport.username }}</a>
+        </p>
+        </div>
+    {% endfor %}
 <div>
 {% if page > 1 %}
     <a href="/show_all_sports/{{ page - 1 }}">&lt;&lt;</a>
@@ -23,5 +26,6 @@
     <a href="/show_all_sports/{{ page + 1 }}">&gt;&gt;</a>
 {% endif %}
 </div>
+{% endif %}
 </div>
 {% endblock %}

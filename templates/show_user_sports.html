@@ -11,13 +11,16 @@
 {% else %}
     <h2>Kaikki käyttäjän {{ user.username }} lisäämät urheilusuoritukset</h2>
 {% endif %}
+{% if user_sports | count == 0 %}
+    <p>Ei lisättyjä urheilusuorituksia</p>
+{% else %}
   {% for sport in user_sports %}
     <div class="sport">
     <p>
       <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
     </p>
     </div>  
-{% endfor %}
+    {% endfor %}
 <div>
 {% if page > 1 %}
     <a href="/show_user_sports/{{ user.id }}/{{ page - 1 }}">&lt;&lt;</a>
@@ -27,5 +30,6 @@
     <a href="/show_user_sports/{{ user.id }}/{{ page + 1 }}">&gt;&gt;</a>
 {% endif %}
 </div>
+{% endif %}
 </div>
 {% endblock %}
