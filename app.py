@@ -1,13 +1,11 @@
-import config
-import markupsafe
+import re, sqlite3, secrets
 from math import ceil
-import re
-import sqlite3
-import secrets
+
 from flask import Flask
 from flask import abort, flash, redirect, render_template, request, session
-import sports
-import users
+import markupsafe
+
+import config, sports, users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
