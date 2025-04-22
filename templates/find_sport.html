@@ -8,26 +8,27 @@
 <b>Voit etsiä urheilusuoritusta esimerkiksi lajin tai kuvauksen mukaan.</b>
 <form action="/find_sport" method="get">
   <p>
-    <b>Hakusana: </b><input type="text" name="query" value="{{ query }}">
+    <label for="query"><b>Hakusana</label>: </b>
+    <input type="text" name="query" id="query" value="{{ query }}">
   </p>
   <input type="submit" value="Etsi">
 </form>
 </div>
 
 {% if query %}
-  <div class="block">
-  <h3>Hakutulokset</h3>
-  {% if results | count == 0 %}
-    <p>Ei hakutuloksia annetulla hakusanalla.</p>
-  {% else %}
-    {% for sport in results %}
-      <div class="sport">
-      <p>
-        <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
-      </p> 
-      </div>  
-    {% endfor %}
-  {% endif %}
+<div class="block">
+<h3>Hakutulokset</h3>
+{% if results | count == 0 %}
+  <p>Ei hakutuloksia annetulla hakusanalla.</p>
+{% else %}
+  {% for sport in results %}
+    <div class="sport">
+    <p>
+      <b>Suoritus:</b> <a href="/sport/{{ sport.id }}">{{ sport.sport }} ({{ sport.sent_at }})</a>
+    </p> 
+    </div>  
+  {% endfor %}
+{% endif %}
 </div>
 {% endif %}
 {% endblock %}

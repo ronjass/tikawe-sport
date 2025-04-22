@@ -7,12 +7,12 @@
 <h2>Kirjaudu sisään</h2>
 <form action="/login" method="post">
   <p>
-    <b>Tunnus: </b><br />
-    <input type="text" name="username" />
+    <label for="username"><b>Tunnus</label>: </b><br />
+    <input type="text" name="username" id="username" />
   </p>
   <p>
-    <b>Salasana: </b><br />
-    <input type="password" name="password" />
+    <label for="password"><b>Salasana</label>: </b><br />
+    <input type="password" name="password" id="password" />
   </p>
   <input type="submit" value="Kirjaudu" />
 </form>

@@ -55,9 +55,9 @@
   {% endfor %}
 {% endif %}
 {% if session.user_id %}
-  <h3>Uusi kommentti:</h3>
-  <form action="/create_comment" method="post">
-    <textarea name="comment" rows="8" cols="50" maxlength="1000" required></textarea> <br />
+<label for="comment"><h3>Uusi kommentti</label>: </h3>
+<form action="/create_comment" method="post">
+    <textarea name="comment" id="comment" rows="8" cols="50" maxlength="1000" required></textarea> <br />
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="sport_id" value="{{ sport.id }}" />
     <input type="submit" value="Lähetä" />
