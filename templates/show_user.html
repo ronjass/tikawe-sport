@@ -20,7 +20,7 @@
 <a href="/show_user_sports/{{ user.id }}/1">Käyttäjän lisäämät urheilusuoritukset</a>
 <p>
 {% if session.user_id == user.id %}
-  <a href="/add_image/{{ user.id }}">Lisää profiilikuva</a>
+  <a href="/add_image/{{ user.id }}">Profiilikuvan hallinnointi</a>
   <a href="/remove_user/{{ user.id }}">Poista käyttäjä</a>
 </p>
 {% endif %}

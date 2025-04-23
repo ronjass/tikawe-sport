@@ -5,11 +5,16 @@
 {% block content %}
 <div class="block">
 <h2>Profiilikuva</h2>
+<form action="/remove_image" method="post">
 {% if user.has_image %}
-  <img src="/image/{{ user.id }}" alt="Profiilikuva" />
+  <img src="/image/{{ user.id }}" alt="Profiilikuva"> <br />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="hidden" name="user_id" value="{{ user.id }}" />
+  <input type="submit" value="Poista profiilikuva" />
 {% else %}
 <p>Et ole vielä lisännyt profiilikuvaa.</p>
 {% endif %}
+</form>
 
 <h3>Lisää uusi profiilikuva</h3>
 <p>Sallittu tiedostomuoto: jpg. Tiedoston maksimikoko: 100kt.</p>
