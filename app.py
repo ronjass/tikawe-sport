@@ -69,13 +69,14 @@ def show_user_sports(user_id, page=1):
 
     if page < 1:
         return redirect("/show_user_sports/1")
-    elif page > total_pages:
+    if page > total_pages:
         return redirect("/show_user_sports/" + str(total_pages))
 
     offset = (page - 1) * page_size
     current_page_sports = sports.get_user_sports_limit(user_id, page_size, offset)
 
-    return render_template("show_user_sports.html", user=user, user_sports=current_page_sports, page=page, total_pages=total_pages)
+    return render_template("show_user_sports.html", user=user, user_sports=current_page_sports,
+                           page=page, total_pages=total_pages)
 
 @app.route("/show_all_sports/<int:page>")
 def show_all_sports(page=1):
@@ -87,13 +88,14 @@ def show_all_sports(page=1):
 
     if page < 1:
         return redirect("/show_all_sports/1")
-    elif page > total_pages:
+    if page > total_pages:
         return redirect("/show_all_sports/" + str(total_pages))
-    
+
     offset = (page - 1) * page_size
     current_page_sports = sports.get_all_sports(page_size, offset)
 
-    return render_template("show_all_sports.html", sports=current_page_sports, page=page, total_pages=total_pages)
+    return render_template("show_all_sports.html", sports=current_page_sports,
+                           page=page, total_pages=total_pages)
 
 @app.route("/sport/<int:sport_id>")
 def show_sport(sport_id):
@@ -103,12 +105,15 @@ def show_sport(sport_id):
     classes = sports.get_classes(sport_id)
     comments = sports.get_comments(sport_id)
     likes_count = sports.get_likes_count(sport_id)
-    return render_template("show_sport.html", sport=sport, classes=classes, comments=comments, likes_count=likes_count)
+    return render_template("show_sport.html", sport=sport, classes=classes,
+                           comments=comments, likes_count=likes_count)
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register")
 def register():
-    if request.method == "GET":
-        return render_template("register.html")
+    return render_template("register.html")
+
+@app.route("/create_user", methods=["POST"])
+def create_user():
     if request.method == "POST":
         username = request.form["username"]
         password1 = request.form["password1"]
@@ -116,7 +121,7 @@ def register():
         if password1 != password2:
             flash("VIRHE: salasanat eivät ole samat", "error")
             return redirect("/register")
-    
+
         try:
             users.create_user(username, password1)
         except sqlite3.IntegrityError:
@@ -133,16 +138,16 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        
+
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("VIRHE: väärä tunnus tai salasana", "error")
-            return redirect("/login")
+
+        flash("VIRHE: väärä tunnus tai salasana", "error")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():
@@ -272,7 +277,7 @@ def create_comment():
 def like_sport():
     require_login()
     check_csrf()
-        
+
     if "user_id" in session:
         sport_id = request.form["sport_id"]
         user_id = session["user_id"]
@@ -281,8 +286,8 @@ def like_sport():
             abort(404)
         sports.add_like(sport_id, user_id)
         return redirect("/sport/" + str(sport_id))
-    else:
-        return redirect("/login")
+
+    return redirect("/login")
 
 @app.route("/remove_sport/<int:sport_id>", methods=["GET", "POST"])
 def remove_sport(sport_id):
@@ -293,7 +298,7 @@ def remove_sport(sport_id):
 
     if sport["user_id"] != session["user_id"]:
         abort(403)
-        
+
     if request.method == "GET":
         return render_template("remove_sport.html", sport=sport)
     if request.method == "POST":
@@ -302,9 +307,7 @@ def remove_sport(sport_id):
             sports.remove_sport(sport_id)
             flash("Urheilusuorituksen poistaminen onnistui.", "info")
             return redirect("/")
-        else:
-            return redirect("/sport/" + str(sport_id))
-    
+        return redirect("/sport/" + str(sport_id))
 
 @app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
 def remove_user(user_id):
@@ -321,7 +324,6 @@ def remove_user(user_id):
     if request.method == "POST":
         check_csrf()
         if "remove" in request.form:
-
             user_sports = sports.get_user_sports(user_id)
             if user_sports:
                 for sport in user_sports:
@@ -331,6 +333,4 @@ def remove_user(user_id):
             del session["username"]
             flash("Käyttäjän poistaminen onnistui.", "info")
             return redirect("/")
-        else:
-            return redirect("/user/" + str(user_id))
-    
+        return redirect("/user/" + str(user_id))

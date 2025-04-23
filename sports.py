@@ -1,7 +1,7 @@
 import db
 
 def add_sport(sport, duration, distance, description, user_id, classes):
-    sql = """INSERT INTO sports (sport, duration, distance, description, user_id) 
+    sql = """INSERT INTO sports (sport, duration, distance, description, user_id)
             VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [sport, duration, distance, description, user_id])
 
@@ -33,16 +33,16 @@ def get_user_sports_count(user_id):
     return result[0][0]
 
 def get_user_sports_limit(user_id, limit, offset):
-    sql = """SELECT id, sport, sent_at 
-             FROM sports WHERE sports.user_id = ? 
-             ORDER BY id DESC 
+    sql = """SELECT id, sport, sent_at
+             FROM sports WHERE sports.user_id = ?
+             ORDER BY id DESC
              LIMIT ? OFFSET ?"""
 
     return db.query(sql, [user_id, limit, offset])
 
 def get_user_sports(user_id):
-    sql = """SELECT id, sport, sent_at 
-             FROM sports WHERE sports.user_id = ? 
+    sql = """SELECT id, sport, sent_at
+             FROM sports WHERE sports.user_id = ?
              ORDER BY id DESC"""
 
     return db.query(sql, [user_id])
@@ -71,12 +71,12 @@ def get_sport(sport_id):
                     users.username
             FROM sports, users
             WHERE sports.user_id = users.id AND sports.id = ?"""
-    
+
     result = db.query(sql, [sport_id])
     return result[0] if result else None
 
 def update_sport(sport_id, sport, duration, distance, description, classes):
-    sql = """UPDATE sports 
+    sql = """UPDATE sports
              SET sport = ?,
                  duration = ?,
                  distance = ?,
@@ -110,7 +110,7 @@ def find_sports(query):
     return db.query(sql, [like, like])
 
 def add_comment(sport_id, user_id, comment):
-    sql = """INSERT INTO comments (sport_id, user_id, comment) 
+    sql = """INSERT INTO comments (sport_id, user_id, comment)
             VALUES (?, ?, ?)"""
     db.execute(sql, [sport_id, user_id, comment])
 

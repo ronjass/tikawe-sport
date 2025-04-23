@@ -7,9 +7,9 @@ def get_user(user_id):
     return result[0] if result else None
 
 def get_sports(user_id):
-    sql = """SELECT id, sport, duration, distance, sent_at 
-             FROM sports 
-             WHERE user_id = ? 
+    sql = """SELECT id, sport, duration, distance, sent_at
+             FROM sports
+             WHERE user_id = ?
              ORDER BY id DESC"""
     return db.query(sql, [user_id])
 
@@ -23,15 +23,14 @@ def check_login(username, password):
     result = db.query(sql, [username])
     if not result:
         return None
-    
+
     user_id = result[0]["id"]
     password_hash = result[0]["password_hash"]
 
     if check_password_hash(password_hash, password):
         return user_id
-    else:
-        return None
-    
+    return None
+
 def remove_user(user_id):
     sql = "DELETE FROM comments WHERE user_id = ?"
     db.execute(sql, [user_id])
