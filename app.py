@@ -4,7 +4,7 @@ import secrets
 from math import ceil
 
 from flask import Flask
-from flask import abort, flash, redirect, render_template, request, session
+from flask import abort, flash, make_response, redirect, render_template, request, session
 import markupsafe
 
 import config
@@ -148,6 +148,45 @@ def login():
 
         flash("VIRHE: väärä tunnus tai salasana", "error")
         return redirect("/login")
+    
+@app.route("/add_image/<int:user_id>", methods=["GET", "POST"])
+def add_image(user_id):
+    require_login()
+
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    if user["id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("add_image.html", user=user)
+
+    if request.method == "POST":
+        check_csrf()
+        
+        file = request.files["image"]
+        if not file.filename.endswith(".jpg"):
+            flash("VIRHE: väärä tiedostomuoto", "error")
+            return redirect("/add_image")
+
+        image = file.read()
+        if len(image) > 100 * 1024:
+            flash("VIRHE: liian suuri kuva", "error")
+            return redirect("/add_image")
+
+        users.update_image(user_id, image)
+        return redirect("/user/" + str(user_id))
+    
+@app.route("/image/<int:user_id>")
+def show_image(user_id):
+    image = users.get_image(user_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response
 
 @app.route("/logout")
 def logout():
@@ -155,6 +194,31 @@ def logout():
         del session["user_id"]
         del session["username"]
     return redirect("/")
+
+@app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
+def remove_user(user_id):
+    require_login()
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    if user["id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("remove_user.html", user=user)
+    if request.method == "POST":
+        check_csrf()
+        if "remove" in request.form:
+            user_sports = sports.get_user_sports(user_id)
+            if user_sports:
+                for sport in user_sports:
+                    sports.remove_sport(sport["id"])
+            users.remove_user(user_id)
+            del session["user_id"]
+            del session["username"]
+            flash("Käyttäjän poistaminen onnistui.", "info")
+            return redirect("/")
+        return redirect("/user/" + str(user_id))
 
 @app.route("/new_sport")
 def new_sport():
@@ -308,29 +372,3 @@ def remove_sport(sport_id):
             flash("Urheilusuorituksen poistaminen onnistui.", "info")
             return redirect("/")
         return redirect("/sport/" + str(sport_id))
-
-@app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
-def remove_user(user_id):
-    require_login()
-    user = users.get_user(user_id)
-    if not user:
-        abort(404)
-
-    if user["id"] != session["user_id"]:
-        abort(403)
-
-    if request.method == "GET":
-        return render_template("remove_user.html", user=user)
-    if request.method == "POST":
-        check_csrf()
-        if "remove" in request.form:
-            user_sports = sports.get_user_sports(user_id)
-            if user_sports:
-                for sport in user_sports:
-                    sports.remove_sport(sport["id"])
-            users.remove_user(user_id)
-            del session["user_id"]
-            del session["username"]
-            flash("Käyttäjän poistaminen onnistui.", "info")
-            return redirect("/")
-        return redirect("/user/" + str(user_id))

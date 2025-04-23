@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Profiilikuva{% endblock %}
+
+{% block content %}
+<div class="block">
+<h2>Profiilikuva</h2>
+{% if user.has_image %}
+  <img src="/image/{{ user.id }}" alt="Profiilikuva" />
+{% else %}
+<p>Et ole vielä lisännyt profiilikuvaa.</p>
+{% endif %}
+
+<h3>Lisää uusi profiilikuva</h3>
+<p>Sallittu tiedostomuoto: jpg. Tiedoston maksimikoko: 100kt.</p>
+<form action="/add_image/{{ user.id }}" method="post" enctype="multipart/form-data">
+    <label for="image"><b>Kuva</label>: </b>
+    <input type="file" name="image" id="image" accept=".jpg" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" value="Lähetä" />
+</form>
+
+<p>
+  <a href="/user/{{ user.id }}">Takaisin käyttäjäsivuille</a>
+</p>
+</div>
+{% endblock %}

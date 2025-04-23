@@ -5,6 +5,9 @@
 {% block content %}
 <div class="block">
 <h2>Käyttäjä {{ user.username }}</h2>
+{% if user.has_image %}
+  <img src="/image/{{ user.id }}" alt="Profiilikuva" />
+{% endif %}
 <p>
   <b>Lisättyjä urheilusuorituksia: </b>{{ user_sports | count }} 
 </p>
@@ -17,6 +20,7 @@
 <a href="/show_user_sports/{{ user.id }}/1">Käyttäjän lisäämät urheilusuoritukset</a>
 <p>
 {% if session.user_id == user.id %}
+  <a href="/add_image/{{ user.id }}">Lisää profiilikuva</a>
   <a href="/remove_user/{{ user.id }}">Poista käyttäjä</a>
 </p>
 {% endif %}
