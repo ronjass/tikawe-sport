@@ -22,6 +22,8 @@ OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilu
 
 ✅ Tilastotietojen tarkastelu urheilusuorituksista käyttäjäsivulla
 
+✅ Profiilikuvan lisääminen ja poistaminen käyttäjäsivuilla
+
 ## Käyttöohjeet sovelluksen testaamiseen
 
 > [!NOTE]
@@ -50,5 +52,5 @@ $ sqlite3 database.db < init.sql
 ```
 Käynnistä sovellus komennolla:
 ```
-$ flask --app onlysport run
+$ flask run
 ```
