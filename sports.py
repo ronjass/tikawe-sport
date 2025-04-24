@@ -101,13 +101,20 @@ def remove_sport(sport_id):
     sql = "DELETE FROM sports WHERE id = ?"
     db.execute(sql, [sport_id])
 
-def find_sports(query):
+def count_query_sports(query):
+    sql = """SELECT COUNT(*) FROM sports WHERE sport LIKE ? OR description LIKE ?"""
+    like = "%" + query + "%"
+    return db.query(sql, [like, like])[0][0]
+
+def find_sports(query, page, page_size):
+    offset = (page - 1) * page_size
     sql = """SELECT id, sport, sent_at
              FROM sports
              WHERE sport LIKE ? OR description LIKE ?
-             ORDER BY id DESC"""
+             ORDER BY id DESC
+             LIMIT ? OFFSET ?"""
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, page_size, offset])
 
 def add_comment(sport_id, user_id, comment):
     sql = """INSERT INTO comments (sport_id, user_id, comment)

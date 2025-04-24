@@ -6,7 +6,7 @@
 <div class="block">
 <h2>Etsi urheilusuoritus</h2>
 <b>Voit etsiä urheilusuoritusta esimerkiksi lajin tai kuvauksen mukaan.</b>
-<form action="/find_sport" method="get">
+<form action="/find_sport/{{ page }}" method="get">
   <p>
     <label for="query"><b>Hakusana</label>: </b>
     <input type="text" name="query" id="query" value="{{ query }}">
@@ -28,6 +28,15 @@
     </p> 
     </div>  
   {% endfor %}
+  <div>
+    {% if page > 1 %}
+      <a href="/find_sport/{{ page - 1 }}?query={{ query }}">&lt;&lt;</a>
+    {% endif %}
+      Sivu {{ page }} / {{ total_pages }}
+    {% if page < total_pages %}
+      <a href="/find_sport/{{ page + 1 }}?query={{ query }}">&gt;&gt;</a>
+    {% endif %}
+</div>
 {% endif %}
 </div>
 {% endif %}
