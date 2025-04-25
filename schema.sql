@@ -9,7 +9,7 @@ CREATE TABLE sports (
     id INTEGER PRIMARY KEY,
     sport TEXT,
     duration INTEGER,
-    distance INTEGER,
+    distance REAL,
     description TEXT,
     sent_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
     user_id INTEGER REFERENCES users
