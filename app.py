@@ -1,4 +1,3 @@
-import re
 import sqlite3
 import secrets
 from math import ceil
@@ -260,9 +259,9 @@ def create_sport():
     description = request.form["description"]
     if len(sport) > 50 or len(description) > 1000:
         abort(403)
-    if not (1 <= int(duration) <= 999):
+    if not 1 <= int(duration) <= 999:
         abort(403)
-    if not (0 <= float(distance) <= 999):
+    if not 0 <= float(distance) <= 999:
         abort(403)
     if not sport or not duration or not distance or not description:
         abort(403)
@@ -321,9 +320,9 @@ def update_sport():
 
     if len(sport) > 50 or len(description) > 1000:
         abort(403)
-    if not (1 <= int(duration) <= 999):
+    if not 1 <= int(duration) <= 999:
         abort(403)
-    if not (0 <= float(distance) <= 999):
+    if not 0 <= float(distance) <= 999:
         abort(403)
     if not sport or not duration or not distance or not description:
         abort(403)
