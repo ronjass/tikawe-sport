@@ -12,7 +12,7 @@
   <b>Lisättyjä urheilusuorituksia: </b>{{ user_sports | count }} 
 </p>
 <p>
-  <b>Liikuttu matka: </b>{{ user_sports | sum(attribute='distance') }} km
+  <b>Liikuttu matka: </b>{{ user_sports | sum(attribute='distance') | round(2) }} km
 </p>
 <p>
   <b>Kulutettu aika: </b>{{ user_sports | sum(attribute='duration') }} min
