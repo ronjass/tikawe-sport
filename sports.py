@@ -2,7 +2,7 @@ import db
 
 def add_sport(sport, duration, distance, description, user_id, classes):
     sql = """INSERT INTO sports (sport, duration, distance, description, user_id)
-            VALUES (?, ?, ?, ?, ?)"""
+             VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [sport, duration, distance, description, user_id])
 
     sport_id = db.last_insert_id()
@@ -102,7 +102,7 @@ def remove_sport(sport_id):
     db.execute(sql, [sport_id])
 
 def count_query_sports(query):
-    sql = """SELECT COUNT(*) FROM sports WHERE sport LIKE ? OR description LIKE ?"""
+    sql = "SELECT COUNT(*) FROM sports WHERE sport LIKE ? OR description LIKE ?"
     like = "%" + query + "%"
     return db.query(sql, [like, like])[0][0]
 
