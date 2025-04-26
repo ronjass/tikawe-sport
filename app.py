@@ -46,6 +46,24 @@ def show_user(user_id):
     user_sports = users.get_sports(user_id)
     return render_template("show_user.html", user=user, user_sports=user_sports)
 
+@app.route("/find_user/<int:page>")
+def find_user(page=1):
+    query = request.args.get("query", "")
+    page_size = 10
+
+    if query:
+        total_results = users.count_query_users(query)
+        total_pages = ceil(total_results / page_size)
+        total_pages = max(total_pages, 1)
+        users_list = users.find_users(query, page, page_size)
+    else:
+        total_results = users.count_query_users(query)
+        total_pages = 0
+        users_list = []
+
+    return render_template("find_user.html", results=users_list, query=query,
+                           total_results=total_results, page=page, total_pages=total_pages)
+
 @app.route("/find_sport/<int:page>")
 def find_sport(page=1):
     query = request.args.get("query", "")

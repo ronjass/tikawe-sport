@@ -15,6 +15,21 @@ def get_sports(user_id):
              ORDER BY id DESC"""
     return db.query(sql, [user_id])
 
+def count_query_users(query):
+    sql = "SELECT COUNT(*) FROM users WHERE username LIKE ?"
+    like = "%" + query + "%"
+    return db.query(sql, [like])[0][0]
+
+def find_users(query, page, page_size):
+    offset = (page - 1) * page_size
+    sql = """SELECT id, username
+             FROM users
+             WHERE username LIKE ?
+             ORDER BY username
+             LIMIT ? OFFSET ?"""
+    like = "%" + query + "%"
+    return db.query(sql, [like, page_size, offset])
+
 def create_user(username, password):
     password_hash = generate_password_hash(password)
     sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Etsi käyttäjä{% endblock %}
+
+{% block content %}
+<div class="block">
+<h2>Etsi käyttäjää</h2>
+<b>Voit etsiä käyttäjää käyttäjänimen perusteella</b>
+<form action="/find_user/{{ page }}" method="get">
+  <p>
+    <label for="query"><b>Hakusana</label>: </b>
+    <input type="text" name="query" id="query" value="{{ query }}">
+  </p>
+  <input type="submit" value="Etsi">
+</form>
+</div>
+
+{% if query %}
+<div class="block">
+<h3>Hakutulokset</h3>
+{% if results | count == 0 %}
+  <p>Ei hakutuloksia annetulla hakusanalla.</p>
+{% else %}
+  {% for user in results %}
+    <div class="sport">
+    <p>
+      <b>Käyttäjä: </b><a href="/user/{{ user.id }}">{{ user.username }}</a>
+    </p> 
+    </div>  
+  {% endfor %}
+  <div>
+    {% if page > 1 %}
+      <a href="/find_user/{{ page - 1 }}?query={{ query }}">&lt;&lt;</a>
+    {% endif %}
+      Sivu {{ page }} / {{ total_pages }}
+    {% if page < total_pages %}
+      <a href="/find_user/{{ page + 1 }}?query={{ query }}">&gt;&gt;</a>
+    {% endif %}
+</div>
+{% endif %}
+</div>
+{% endif %}
+{% endblock %}
