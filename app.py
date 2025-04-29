@@ -176,7 +176,8 @@ def login():
             return redirect("/")
 
         flash("VIRHE: väärä tunnus tai salasana", "error")
-        return redirect("/login")
+        filled = {"username": username}
+        return render_template("login.html", filled=filled)
 
 @app.route("/add_image/<int:user_id>", methods=["GET", "POST"])
 def add_image(user_id):
