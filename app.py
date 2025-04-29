@@ -141,10 +141,11 @@ def register():
 def create_user():
     if request.method == "POST":
         username = request.form["username"]
-        if len(username) > 16:
+        if not username or len(username) > 16:
             abort(403)
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+
         if password1 != password2:
             flash("VIRHE: salasanat eivät ole samat", "error")
             filled = {"username": username}
@@ -152,18 +153,17 @@ def create_user():
 
         try:
             users.create_user(username, password1)
+            flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.", "info")
+            return redirect("/")
         except sqlite3.IntegrityError:
             flash("VIRHE: tunnus on jo varattu", "error")
             filled = {"username": username}
             return render_template("register.html", filled=filled)
-    
-    flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.", "info")
-    return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("login.html", filled={})
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
