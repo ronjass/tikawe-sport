@@ -6,7 +6,7 @@
 <div class="block">
 <h2>Käyttäjä {{ user.username }}</h2>
 {% if user.has_image %}
-  <img src="/image/{{ user.id }}" alt="Profiilikuva" />
+  <img src="/image/{{ user.id }}" alt="Käyttäjän {{ user.username }} profiilikuva" />
 {% endif %}
 <p>
   <b>Lisättyjä urheilusuorituksia: </b>{{ user_sports | count }} 
