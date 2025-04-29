@@ -135,24 +135,28 @@ def show_sport(sport_id):
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    return render_template("register.html", filled={})
 
 @app.route("/create_user", methods=["POST"])
 def create_user():
     if request.method == "POST":
         username = request.form["username"]
+        if len(username) > 16:
+            abort(403)
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
             flash("VIRHE: salasanat eivät ole samat", "error")
-            return redirect("/register")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
 
         try:
             users.create_user(username, password1)
         except sqlite3.IntegrityError:
             flash("VIRHE: tunnus on jo varattu", "error")
-            return redirect("/register")
-
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
+    
     flash("Tunnus luotu. Kirjaudu sisään käyttäjällesi.", "info")
     return redirect("/")
 

@@ -7,8 +7,8 @@
 <h2>Luo tunnus</h2>
 <form action="/create_user" method="post">
   <p>
-    <label for="username"><b>Tunnus</label>: </b><br />
-    <input type="text" name="username" id="username" />
+    <label for="username"><b>Tunnus</label> (max 16 merkkiä): </b><br />
+    <input type="text" name="username" id="username" value="{{ filled.username }}" maxlength="16" />
   </p>
   <p>
     <label for="password1"><b>Salasana</label>: </b><br />
