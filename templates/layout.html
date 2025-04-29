@@ -17,10 +17,10 @@
   {% if session.username %}
     <a href="/new_sport">Lisää urheilusuoritus</a> |
     <div class="dropdown">
-      <button>{{ session.username }}</button>
+      <button>Profiili</button>
       <div class="dropdown-content">
+        <a href="/user/{{ session.user_id }}">{{ user.username }}</a>
         <a href="/logout">Kirjaudu ulos</a>
-        <a href="/user/{{ session.user_id }}">Profiili</a>
       </div>
     </div>
     {% else %}
