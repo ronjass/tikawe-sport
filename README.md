@@ -24,6 +24,44 @@ OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilu
 
 ✅ Profiilikuvan lisääminen ja poistaminen käyttäjäsivuilla
 
+## Sovelluksen testaus suurella tietomäärällä
+
+Projektikansiossa on mukana tiedosto seed.py, jolla voi alustaa testiaineiston komennolla:
+```
+$ python3 seed.py
+```
+
+Tiedosto alustaa tietokantaan testiaineiston, jossa on:
+
+- 1000 käyttäjää
+- 1000000 (miljoona) urheilusuoritusta
+- 1000000 (miljoona) kommenttia
+- 1000 tykkäystä jokaisessa urheilusuorituksessa
+
+Urheilusuoritukset ovat muotoa "sport" + id-numero eli esimerkiksi "sport100". Jokaiselle urheilusuoritukselle arvotaan satunnaisesti käyttäjä, joka on lisännyt suorituksen. Lisäksi urheilusuorituksen lisätiedot (aika, matka, luokitukset) on satunnaisesti arvottu. Kommentit on nimetty suoritusten tavoin eli esimerkiksi "comment123". Jokaiselle kommentille arvotaan satunnaisesti, mihin urheilusuoritukseen se on lisätty ja mikä käyttäjä on lisännyt kommentin.
+
+Lisäsin sovellukseen koodin, joka mittaa, kuinka nopeasti sovellus vastaa sivupyyntöihin. Ensimmäisellä testikerralla sovellus toimi hitaasti. Esimerkiksi urheilusuorituksen sport1000000 avaaminen etusivulta vie aikaa melkein 25 sekuntia ja urheilusuorituslistauksen avaaminen vie aikaa melkein sekunnin.
+
+![alt text](https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing.png "Sivupyyntöjen ajanmittaus ilman indeksejä")
+
+Lisäsin tietokantaan seuraavat indeksit, jotta sovellus toimisi nopeammin:
+
+`CREATE INDEX idx_sports_user ON sports(user_id);`
+
+`CREATE INDEX idx_sport_comments ON comments (sport_id);`
+
+`CREATE INDEX idx_comments_user ON comments (user_id);`
+
+`CREATE INDEX idx_sport_likes ON likes (sport_id);`
+
+`CREATE INDEX idx_likes_user on likes (user_id, sport_id);`
+
+`CREATE INDEX idx_sport_classes_sport ON sport_classes (sport_id);`
+
+Indeksien lisäämisen jälkeen sovellus toimii nopeasti. Nyt esimerkiksi urheilusuorituksen sport1000000 avaaminen etusivulta vie aikaa 0,01 sekuntia ja urheilusuorituslistan avaaminen vie aikaa 0,03 sekuntia. Indeksien avulla sovellus siis toimii nopeasti myös suurella tietomäärällä.
+
+![alt text](https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing_idx.png "Sivupyyntöjen ajanmittaus indekseillä")
+
 ## Käyttöohjeet sovelluksen testaamiseen
 
 > [!NOTE]
