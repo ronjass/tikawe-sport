@@ -200,12 +200,12 @@ def add_image(user_id):
         file = request.files["image"]
         if not file.filename.endswith(".jpg"):
             flash("VIRHE: väärä tiedostomuoto", "error")
-            return redirect("/add_image/" +str(user_id))
+            return redirect("/add_image/" + str(user_id))
 
         image = file.read()
         if len(image) > 100 * 1024:
             flash("VIRHE: liian suuri kuva", "error")
-            return redirect("/add_image/" +str(user_id))
+            return redirect("/add_image/" + str(user_id))
 
         users.update_image(user_id, image)
         return redirect("/user/" + str(user_id))
@@ -234,13 +234,13 @@ def remove_image():
 
     users.remove_image(user_id)
 
-    return redirect("/add_image/" +str(user_id))
+    return redirect("/add_image/" + str(user_id))
 
 @app.route("/logout")
 def logout():
-    if "user_id" in session:
-        del session["user_id"]
-        del session["username"]
+    require_login()
+    del session["user_id"]
+    del session["username"]
     return redirect("/")
 
 @app.route("/remove_user/<int:user_id>", methods=["GET", "POST"])
