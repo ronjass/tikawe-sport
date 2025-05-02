@@ -4,6 +4,10 @@
 
 OnlySport on verkkosovellus ihmisille, jotka yksinkertaisesti rakastavat urheilua ja dataa. Sovelluksen perusideana on, että kirjautuneet käyttäjät voivat tallentaa sivustolle urheilusuorituksiaan. Sovellus tuo urheilua rakastavat ihmiset yhteen, sillä sovelluksessa voi tarkastella muiden lisäämiä urheilusuorituksia, ja lisäksi kirjautuneet käyttäjät voivat kommentoida urheilusuorituksia ja tykätä niistä.
 
+<img src=https://github.com/ronjass/tikawe-sport/blob/main/media/frontpage.png alt="Sovelluksen etusivu" height="600px"/>
+
+Sovellus on tehty harjoitustyönä Helsingin yliopiston Tietokannat ja web-ohjelmointi -kurssilla. Sovellus on tietokantaa hyödyntävä web-sovellus, jonka toteutuksessa on käytetty Pythonia, Flask-kirjastoa sekä SQLite-tietokantaa.
+
 ## Sovelluksen toiminnallisuus
 
 ✅ Rekisteröityminen, kirjautuminen ja tilin poistaminen
@@ -42,7 +46,7 @@ Urheilusuoritukset ovat muotoa "sport" + id-numero eli esimerkiksi "sport100". J
 
 Lisäsin sovellukseen koodin, joka mittaa, kuinka nopeasti sovellus vastaa sivupyyntöihin. Ensimmäisellä testikerralla sovellus toimi hitaasti. Esimerkiksi urheilusuorituksen sport1000000 avaaminen etusivulta vie aikaa melkein 25 sekuntia ja urheilusuorituslistauksen avaaminen vie aikaa melkein sekunnin.
 
-![alt text](https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing.png "Sivupyyntöjen ajanmittaus ilman indeksejä")
+<img src=https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing.png alt="Sivupyyntöjen ajanmittaus ilman indeksejä" height="400xp"/>
 
 Lisäsin tietokantaan seuraavat indeksit, jotta sovellus toimisi nopeammin:
 
@@ -60,7 +64,7 @@ Lisäsin tietokantaan seuraavat indeksit, jotta sovellus toimisi nopeammin:
 
 Indeksien lisäämisen jälkeen sovellus toimii nopeasti. Nyt esimerkiksi urheilusuorituksen sport1000000 avaaminen etusivulta vie aikaa 0,01 sekuntia ja urheilusuorituslistan avaaminen vie aikaa 0,03 sekuntia. Indeksien avulla sovellus siis toimii nopeasti myös suurella tietomäärällä.
 
-![alt text](https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing_idx.png "Sivupyyntöjen ajanmittaus indekseillä")
+<img src=https://github.com/ronjass/tikawe-sport/blob/main/media/big_data_testing_idx.png alt="Sivupyyntöjen ajanmittaus indekseillä" height="400xp"/>
 
 ## Käyttöohjeet sovelluksen testaamiseen
 
