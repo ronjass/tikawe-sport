@@ -41,3 +41,10 @@ CREATE TABLE likes (
     sport_id INTEGER REFERENCES sports,
     user_id INTEGER REFERENCES users
 );
+
+CREATE INDEX idx_sports_user ON sports(user_id);
+CREATE INDEX idx_sport_comments ON comments (sport_id);
+CREATE INDEX idx_comments_user ON comments (user_id);
+CREATE INDEX idx_sport_likes ON likes (sport_id);
+CREATE INDEX idx_likes_user on likes (user_id, sport_id);
+CREATE INDEX idx_sport_classes_sport ON sport_classes (sport_id);
